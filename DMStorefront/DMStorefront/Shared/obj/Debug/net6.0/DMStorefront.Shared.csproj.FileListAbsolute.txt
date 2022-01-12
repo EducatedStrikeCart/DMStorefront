@@ -1,0 +1,12 @@
+D:\GitHub\DMStorefront\DMStorefront\DMStorefront\Shared\bin\Debug\net6.0\DMStorefront.Shared.deps.json
+D:\GitHub\DMStorefront\DMStorefront\DMStorefront\Shared\bin\Debug\net6.0\DMStorefront.Shared.dll
+D:\GitHub\DMStorefront\DMStorefront\DMStorefront\Shared\bin\Debug\net6.0\ref\DMStorefront.Shared.dll
+D:\GitHub\DMStorefront\DMStorefront\DMStorefront\Shared\bin\Debug\net6.0\DMStorefront.Shared.pdb
+D:\GitHub\DMStorefront\DMStorefront\DMStorefront\Shared\obj\Debug\net6.0\DMStorefront.Shared.csproj.AssemblyReference.cache
+D:\GitHub\DMStorefront\DMStorefront\DMStorefront\Shared\obj\Debug\net6.0\DMStorefront.Shared.GeneratedMSBuildEditorConfig.editorconfig
+D:\GitHub\DMStorefront\DMStorefront\DMStorefront\Shared\obj\Debug\net6.0\DMStorefront.Shared.AssemblyInfoInputs.cache
+D:\GitHub\DMStorefront\DMStorefront\DMStorefront\Shared\obj\Debug\net6.0\DMStorefront.Shared.AssemblyInfo.cs
+D:\GitHub\DMStorefront\DMStorefront\DMStorefront\Shared\obj\Debug\net6.0\DMStorefront.Shared.csproj.CoreCompileInputs.cache
+D:\GitHub\DMStorefront\DMStorefront\DMStorefront\Shared\obj\Debug\net6.0\DMStorefront.Shared.dll
+D:\GitHub\DMStorefront\DMStorefront\DMStorefront\Shared\obj\Debug\net6.0\ref\DMStorefront.Shared.dll
+D:\GitHub\DMStorefront\DMStorefront\DMStorefront\Shared\obj\Debug\net6.0\DMStorefront.Shared.pdb
