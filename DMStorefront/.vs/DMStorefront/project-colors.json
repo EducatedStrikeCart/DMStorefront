@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "75746d88-6202-41e7-aef0-5f8ab83e3f04": {
+      "ProjectGuid": "75746d88-6202-41e7-aef0-5f8ab83e3f04",
+      "DisplayName": "DMStorefront.Server",
+      "ColorIndex": 0
+    },
+    "a0dd34f2-5899-4d5d-a4ae-73ebbb2293b4": {
+      "ProjectGuid": "a0dd34f2-5899-4d5d-a4ae-73ebbb2293b4",
+      "DisplayName": "DMStorefront.Client",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}
