@@ -7,25 +7,21 @@ using System.Threading.Tasks;
 
 namespace DMStorefront.Shared
 {
-    internal class PriceValidationAttribute : ValidationAttribute
+    public class PriceValidation : ValidationAttribute
     {
-        public PriceValidationAttribute(Price price)
+        protected override ValidationResult 
+            IsValid(object value, ValidationContext validationContext)
         {
-            Price = price;
-        }
-        public Price Price { get; set; }
+            if (value.ToString() == "0, 0, 0, 0"){
 
-        public string GetErrorMessage() =>
-            $"Please enter price in at least one box (copper, silver, or gold)";
-
-        protected override ValidationResult IsValid (object value, ValidationContext validationContext)
-        {
-            if (Price.Value == 0)
-            {
-                return new ValidationResult(GetErrorMessage());
+                return new ValidationResult
+                    ("Please enter a price.");
             }
-           
-            return ValidationResult.Success;
+            else
+            {
+                return ValidationResult.Success;
+            }
         }
     }
 }
+

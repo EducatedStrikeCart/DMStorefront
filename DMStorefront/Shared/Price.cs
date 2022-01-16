@@ -14,6 +14,9 @@ namespace DMStorefront.Shared
 
         public int Value { get; set; }
 
+       
+        
+
         public Price(int value)
         {
             Gold = value/ 100;
@@ -22,7 +25,7 @@ namespace DMStorefront.Shared
             Value = value;
         }
 
-        public Price() : this(0) { }
+       public Price() { }
 
         public Price(int gold, int silver, int copper)
         {
@@ -30,6 +33,12 @@ namespace DMStorefront.Shared
             Silver = silver;
             Copper = copper;
             Value = (gold * 100) + (silver * 10) + copper;
+        }
+
+        public override string ToString()
+        {
+            return Gold.ToString() + ", " + Silver.ToString() + ", " + Copper.ToString() + ", " + Value.ToString();
+
         }
 
         //might need to also be comparable
