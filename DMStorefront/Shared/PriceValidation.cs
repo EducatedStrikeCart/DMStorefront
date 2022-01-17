@@ -9,8 +9,7 @@ namespace DMStorefront.Shared
 {
     public class PriceValidation : ValidationAttribute
     {
-        protected override ValidationResult 
-            IsValid(object value, ValidationContext validationContext)
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value.ToString() == "0, 0, 0, 0"){
 
