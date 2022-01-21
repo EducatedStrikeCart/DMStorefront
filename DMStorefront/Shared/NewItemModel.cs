@@ -14,6 +14,8 @@ namespace DMStorefront.Shared
         
         public string Description { get; set; }    
 
+       
+
         public NewItemModel()
         {
             
@@ -21,6 +23,7 @@ namespace DMStorefront.Shared
             Weight = 0;
             Price = new Price();
             Description = string.Empty;
+            
         }
 
     }

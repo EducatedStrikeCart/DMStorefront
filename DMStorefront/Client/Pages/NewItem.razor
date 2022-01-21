@@ -24,6 +24,7 @@
 		<label>
 			Price:
 
+<<<<<<< HEAD
 			<InputNumber id="copper" @bind-Value="newItemModel.Price.Copper" />
 			copper
 			<InputNumber id="silver" @bind-Value="newItemModel.Price.Silver" />
@@ -38,6 +39,24 @@
 		</label>
 	</p>
 	<button type="submit"> Submit </button>
+=======
+        <InputNumber id="copper" @bind-Value="newItemModel.Price.Copper" />
+        copper
+        <InputNumber id="silver" @bind-Value="newItemModel.Price.Silver" />
+        silver
+        <InputNumber id="gold" @bind-Value="newItemModel.Price.Gold" />
+        gold
+    </label>
+</p>
+<p>
+    <label>
+        Description:
+        <InputTextArea id="description" @bind-Value="newItemModel.Description" />
+    </label>
+</p>
+
+    <button type="submit"> Submit </button> 
+>>>>>>> 9c9fb70 (Attempting to get DbContext to work for Items)
 </EditForm>
 
 @code {

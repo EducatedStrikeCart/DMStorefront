@@ -2,6 +2,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+<<<<<<< HEAD
+=======
+using Microsoft.Extensions.Options;
+using DMStorefront.Shared;
+>>>>>>> 9c9fb70 (Attempting to get DbContext to work for Items)
 
 namespace DMStorefront.Server.Data
 {
@@ -27,4 +32,15 @@ namespace DMStorefront.Server.Data
         }
 
     }
+<<<<<<< HEAD
 }
+=======
+    public class ApplicationDBContext : DbContext
+    {
+        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
+        {
+        }
+        public DbSet<Item> Items { get; set; }
+    }
+}
+>>>>>>> 9c9fb70 (Attempting to get DbContext to work for Items)
