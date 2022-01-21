@@ -19,7 +19,7 @@ namespace DMStorefront.Shared
 
         public string Description { get; set; }
 
-        public string ImageUrl { get; set; }
+      
 
         public Item()
         {
@@ -28,7 +28,7 @@ namespace DMStorefront.Shared
             Weight = 0;
             Price = new Price();
             Description = string.Empty;
-            ImageUrl = string.Empty;
+           
             
         }
 

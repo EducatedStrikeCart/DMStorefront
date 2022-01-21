@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace DMStorefront.Server.Data.Migrations
+namespace DMStorefront.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220121122912_Initial")]
-    partial class Initial
+    [Migration("20220121192618_CreateIdentitySchema")]
+    partial class CreateIdentitySchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -83,6 +83,52 @@ namespace DMStorefront.Server.Data.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("DMStorefront.Shared.Item", b =>
+                {
+                    b.Property<string>("Name")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("PriceValue")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Weight")
+                        .HasColumnType("int");
+
+                    b.HasKey("Name");
+
+                    b.HasIndex("PriceValue");
+
+                    b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("DMStorefront.Shared.Price", b =>
+                {
+                    b.Property<int>("Value")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("Copper")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Gold")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Silver")
+                        .HasColumnType("int");
+
+                    b.HasKey("Value");
+
+                    b.ToTable("Price");
                 });
 
             modelBuilder.Entity("Duende.IdentityServer.EntityFramework.Entities.DeviceFlowCodes", b =>
@@ -356,6 +402,17 @@ namespace DMStorefront.Server.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("DMStorefront.Shared.Item", b =>
+                {
+                    b.HasOne("DMStorefront.Shared.Price", "Price")
+                        .WithMany()
+                        .HasForeignKey("PriceValue")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Price");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
