@@ -16,6 +16,7 @@ namespace DMStorefront.Server.Data
             : base(options)
         {
         }
+<<<<<<< HEAD
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -44,3 +45,9 @@ namespace DMStorefront.Server.Data
     }
 }
 >>>>>>> 9c9fb70 (Attempting to get DbContext to work for Items)
+=======
+        public DbSet<Item> Items { get; set; }
+    }
+    
+}
+>>>>>>> ff09180 (IdentityServer is fighting with Pomelo and not letting me build the DB, so I'm going to delete and rebuild the Migrations folder and see what happens. Here's hoping.)

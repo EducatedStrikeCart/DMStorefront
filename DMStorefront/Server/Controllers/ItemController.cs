@@ -10,8 +10,8 @@ namespace DMStorefront.Server.Controllers
     [ApiController]
     public class ItemController : ControllerBase
     {
-        private readonly ApplicationDBContext _context;
-        public ItemController(ApplicationDBContext context)
+        private readonly ApplicationDbContext _context;
+        public ItemController(ApplicationDbContext context)
         {
             this._context = context;
         }
