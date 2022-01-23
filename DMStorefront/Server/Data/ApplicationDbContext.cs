@@ -5,8 +5,12 @@ using Microsoft.EntityFrameworkCore;
 <<<<<<< HEAD
 =======
 using Microsoft.Extensions.Options;
+<<<<<<< HEAD
 using DMStorefront.Shared;
 >>>>>>> 9c9fb70 (Attempting to get DbContext to work for Items)
+=======
+using DMStorefront.Shared.Models.Item;
+>>>>>>> 2233b00 (Continuing getting CRUD working. About to delete old NewItem page and replace with prettier Razor component.)
 
 namespace DMStorefront.Server.Data
 {

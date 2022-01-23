@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DMStorefront.Shared
+namespace DMStorefront.Shared.Models.Item
 {
     public class Item
     {

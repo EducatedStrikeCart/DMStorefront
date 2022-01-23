@@ -1,7 +1,7 @@
 ﻿using DMStorefront.Server.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using DMStorefront.Shared;
+using DMStorefront.Shared.Models.Item;
 using Microsoft.EntityFrameworkCore;
 
 namespace DMStorefront.Server.Controllers

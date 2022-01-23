@@ -1,0 +1,49 @@
+﻿@using DMStorefront.Shared.Models.Item;
+
+<h3>form</h3>
+<EditForm Model="@item" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>Item Name :</label>
+        <div>
+            <InputText @bind-Value="@item.Name" />
+            <ValidationMessage For="@(() => item.Name)" />
+        </div>
+    </div>
+    <div class="form-group ">
+        <div>
+            <label>Weight :</label>
+            <div>
+                <InputText @bind-Value="@item.Weight.ToString()" />
+                <ValidationMessage For="@(() => item.Weight)" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group ">
+        <div>
+            <label>Price :</label>
+            <div>
+                <InputText @bind-Value="@item.Price.ToString()" />
+                <ValidationMessage For="@(() => item.Price)" />
+            </div>
+        </div>
+    </div>
+    <div class="form-group ">
+        <div>
+            <label>Description :</label>
+            <div>
+                <InputNumber @bind-Value="@item.Description" />
+                <ValidationMessage For="@(() => item.Description)" />
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">
+        @ButtonText
+    </button>
+</EditForm>
+@code {
+    [Parameter] public Item item { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+}
+

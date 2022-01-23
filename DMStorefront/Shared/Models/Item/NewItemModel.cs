@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace DMStorefront.Shared
+namespace DMStorefront.Shared.Models.Item
 {
     public class NewItemModel
     {
