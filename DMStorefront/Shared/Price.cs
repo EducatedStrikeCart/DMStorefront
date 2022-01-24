@@ -9,16 +9,12 @@ namespace DMStorefront.Shared
 {
     public class Price
     {
-        [Key]
-        public int Value { get; set; }
+    
+        
         public int Gold { get; set; }
         public int Silver { get; set; }
         public int Copper { get; set; }
-
-        
-
-       
-        
+        public int Value { get; set; }
 
         public Price(int value)
         {
@@ -40,7 +36,7 @@ namespace DMStorefront.Shared
 
         public override string ToString()
         {
-            return Gold.ToString() + ", " + Silver.ToString() + ", " + Copper.ToString() + ", " + Value.ToString();
+            return Gold.ToString() + " gold " + Silver.ToString() + " silver " + Copper.ToString() + " copper " + Value.ToString();
 
         }
 

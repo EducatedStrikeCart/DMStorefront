@@ -1,4 +1,4 @@
-﻿@page "/Items"
+﻿@page "/item"
 @using DMStorefront.Shared.Models.Item
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
@@ -12,7 +12,7 @@
 <h3>Items</h3>
 <small>Add items.</small>
 <div class="form-group">
-    <a class="btn btn-success" href="/newitem"><i class="oi oi-plus"></i> Create New</a>
+    <a class="btn btn-success" href="/item/create"><i class="oi oi-plus"></i> Create New</a>
 </div>
 <br>
 @if (items == null)

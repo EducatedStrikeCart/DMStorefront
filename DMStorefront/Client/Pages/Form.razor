@@ -1,4 +1,6 @@
-﻿@using DMStorefront.Shared.Models.Item;
+﻿
+@using DMStorefront.Shared.Models.Item;
+@using System.Linq
 
 <h3>form</h3>
 <EditForm Model="@item" OnValidSubmit="@OnValidSubmit">
@@ -14,7 +16,7 @@
         <div>
             <label>Weight :</label>
             <div>
-                <InputText @bind-Value="@item.Weight.ToString()" />
+                <InputNumber @bind-Value="@item.Weight" />
                 <ValidationMessage For="@(() => item.Weight)" />
             </div>
         </div>
@@ -23,8 +25,12 @@
         <div>
             <label>Price :</label>
             <div>
-                <InputText @bind-Value="@item.Price.ToString()" />
-                <ValidationMessage For="@(() => item.Price)" />
+                <InputNumber @bind-Value="@item.Price.Gold" />
+                <ValidationMessage For="@(() => item.Price.Gold)" />
+                <InputNumber @bind-Value="@item.Price.Silver" />
+                <ValidationMessage For="@(() => item.Price.Silver)" />
+                <InputNumber @bind-Value="@item.Price.Copper" />
+                <ValidationMessage For="@(() => item.Price.Copper)" />
             </div>
         </div>
     </div>
@@ -32,7 +38,7 @@
         <div>
             <label>Description :</label>
             <div>
-                <InputNumber @bind-Value="@item.Description" />
+                <InputText @bind-Value="@item.Description" />
                 <ValidationMessage For="@(() => item.Description)" />
             </div>
         </div>
