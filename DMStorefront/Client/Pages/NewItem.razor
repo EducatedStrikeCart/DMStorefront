@@ -1,97 +1,20 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-﻿@page "/newitem"
-@using DMStorefront.Shared;
+@page "/item/create"
+@using DMStorefront.Shared.Models.Item;
 @attribute [Authorize]
 
-=======
-﻿
-@page "/newitem"
-=======
-﻿@page "/item/create"
->>>>>>> 199a312 (Almost there with the CRUD on items, but having issues around the Price class. EF thinks Price is an entity and has made a table for it in MySQL, and it doesn't display Price properties properly in the table on the webpage (not is it recorded correctly in the databse).)
-@using DMStorefront.Shared.Models.Item;
->>>>>>> 2233b00 (Continuing getting CRUD working. About to delete old NewItem page and replace with prettier Razor component.)
 
-<<<<<<< HEAD
-<h3>Create New Item</h3>
-
-<EditForm Model="@newItemModel" OnValidSubmit="@HandleValidSubmit">
-	<DataAnnotationsValidator />
-	<ValidationSummary />
-	<p>
-		<label>
-			Name:
-			<InputText id="name" @bind-Value="newItemModel.Name" />
-		</label>
-	</p>
-	<p>
-		<label>
-			Weight:
-			<InputNumber id="weight" @bind-Value="newItemModel.Weight" />
-		</label>
-	</p>
-	<p>
-		<label>
-			Price:
-
-<<<<<<< HEAD
-			<InputNumber id="copper" @bind-Value="newItemModel.Price.Copper" />
-			copper
-			<InputNumber id="silver" @bind-Value="newItemModel.Price.Silver" />
-			silver
-			<InputNumber id="gold" @bind-Value="newItemModel.Price.Gold" />
-		</label>
-	</p>
-	<p>
-		<label>
-			Description:
-			<InputTextArea id="description" @bind-Value="newItemModel.Description" />
-		</label>
-	</p>
-	<button type="submit"> Submit </button>
-=======
-        <InputNumber id="copper" @bind-Value="newItemModel.Price.Copper" />
-        copper
-        <InputNumber id="silver" @bind-Value="newItemModel.Price.Silver" />
-        silver
-        <InputNumber id="gold" @bind-Value="newItemModel.Price.Gold" />
-        gold
-    </label>
-</p>
-<p>
-    <label>
-        Description:
-        <InputTextArea id="description" @bind-Value="newItemModel.Description" />
-    </label>
-</p>
-
-    <button type="submit"> Submit </button> 
->>>>>>> 9c9fb70 (Attempting to get DbContext to work for Items)
-</EditForm>
-
-@code {
-	public NewItemModel newItemModel = new();
-
-
-
-	private void HandleValidSubmit()
-	{
-		//process valid submission
-	}
-=======
 @inject HttpClient http
 @inject NavigationManager uriHelper
 <h3>Create</h3>
 <Form ButtonText="Create Item" item="@item"
             OnValidSubmit="@CreateAnItem" />
 @code {
+
     Item item = new Item();
     async Task CreateAnItem()
     {
         await http.PostAsJsonAsync("api/item", item);
         uriHelper.NavigateTo("item");
     }
->>>>>>> 199a312 (Almost there with the CRUD on items, but having issues around the Price class. EF thinks Price is an entity and has made a table for it in MySQL, and it doesn't display Price properties properly in the table on the webpage (not is it recorded correctly in the databse).)
 }
 
