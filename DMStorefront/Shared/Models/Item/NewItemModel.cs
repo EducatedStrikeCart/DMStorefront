@@ -10,7 +10,7 @@ namespace DMStorefront.Shared.Models.Item
         public int Weight { get; set; }
         
         [Required]
-        public string Price { get; set; }
+        public int Price { get; set; }
         
         public string Description { get; set; }    
 
@@ -21,7 +21,7 @@ namespace DMStorefront.Shared.Models.Item
             
             Name = string.Empty;
             Weight = 0;
-            Price = new string("0.0.0");
+            Price = 0;
             Description = string.Empty;
             
         }
