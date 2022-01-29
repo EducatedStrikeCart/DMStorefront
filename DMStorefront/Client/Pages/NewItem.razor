@@ -1,51 +1,52 @@
-﻿
-@page "/newitem"
+﻿@page "/newitem"
 @using DMStorefront.Shared;
+@attribute [Authorize]
+
 
 <h3>Create New Item</h3>
 
 <EditForm Model="@newItemModel" OnValidSubmit="@HandleValidSubmit">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-<p>
-    <label>
-        Name:
-        <InputText id="name" @bind-Value="newItemModel.Name" />
-    </label>
-</p>
-<p>
-    <label>
-        Weight:
-        <InputNumber id="weight" @bind-Value="newItemModel.Weight" />
-    </label>
-</p>
-<p>
-    <label>
-        Price:
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+	<p>
+		<label>
+			Name:
+			<InputText id="name" @bind-Value="newItemModel.Name" />
+		</label>
+	</p>
+	<p>
+		<label>
+			Weight:
+			<InputNumber id="weight" @bind-Value="newItemModel.Weight" />
+		</label>
+	</p>
+	<p>
+		<label>
+			Price:
 
-        <InputNumber id="copper" @bind-Value="newItemModel.Price.Copper" />
-        copper
-        <InputNumber id="silver" @bind-Value="newItemModel.Price.Silver" />
-        silver
-        <InputNumber id="gold" @bind-Value="newItemModel.Price.Gold" />
-    </label>
-</p>
-<p>
-    <label>
-        Description:
-        <InputTextArea id="description" @bind-Value="newItemModel.Description" />
-    </label>
-</p>
-    <button type="submit"> Submit </button> 
+			<InputNumber id="copper" @bind-Value="newItemModel.Price.Copper" />
+			copper
+			<InputNumber id="silver" @bind-Value="newItemModel.Price.Silver" />
+			silver
+			<InputNumber id="gold" @bind-Value="newItemModel.Price.Gold" />
+		</label>
+	</p>
+	<p>
+		<label>
+			Description:
+			<InputTextArea id="description" @bind-Value="newItemModel.Description" />
+		</label>
+	</p>
+	<button type="submit"> Submit </button>
 </EditForm>
 
 @code {
-    public NewItemModel newItemModel = new();
-    
+	public NewItemModel newItemModel = new();
 
 
-    private void HandleValidSubmit()
-    {
-        //process valid submission
-    }
+
+	private void HandleValidSubmit()
+	{
+		//process valid submission
+	}
 }
