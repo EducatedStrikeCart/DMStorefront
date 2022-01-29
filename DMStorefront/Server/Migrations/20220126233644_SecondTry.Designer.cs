@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DMStorefront.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220124193729_CRUDComplete")]
-    partial class CRUDComplete
+    [Migration("20220126233644_SecondTry")]
+    partial class SecondTry
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -94,7 +94,7 @@ namespace DMStorefront.Server.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("PriceValue")
+                    b.Property<int>("Price")
                         .HasColumnType("int");
 
                     b.Property<int>("Weight")
@@ -102,29 +102,7 @@ namespace DMStorefront.Server.Migrations
 
                     b.HasKey("Name");
 
-                    b.HasIndex("PriceValue");
-
                     b.ToTable("Items");
-                });
-
-            modelBuilder.Entity("DMStorefront.Shared.Price", b =>
-                {
-                    b.Property<int>("Value")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("Copper")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Gold")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Silver")
-                        .HasColumnType("int");
-
-                    b.HasKey("Value");
-
-                    b.ToTable("Price");
                 });
 
             modelBuilder.Entity("Duende.IdentityServer.EntityFramework.Entities.DeviceFlowCodes", b =>
@@ -398,17 +376,6 @@ namespace DMStorefront.Server.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("DMStorefront.Shared.Models.Item.Item", b =>
-                {
-                    b.HasOne("DMStorefront.Shared.Price", "Price")
-                        .WithMany()
-                        .HasForeignKey("PriceValue")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Price");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

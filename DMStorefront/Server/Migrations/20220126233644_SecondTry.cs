@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DMStorefront.Server.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class SecondTry : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -95,6 +95,23 @@ namespace DMStorefront.Server.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Items",
+                columns: table => new
+                {
+                    Name = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Weight = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Items", x => x.Name);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Keys",
                 columns: table => new
                 {
@@ -142,22 +159,6 @@ namespace DMStorefront.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersistedGrants", x => x.Key);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Price",
-                columns: table => new
-                {
-                    Value = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Gold = table.Column<int>(type: "int", nullable: false),
-                    Silver = table.Column<int>(type: "int", nullable: false),
-                    Copper = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Price", x => x.Value);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -288,31 +289,6 @@ namespace DMStorefront.Server.Migrations
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
-            migrationBuilder.CreateTable(
-                name: "Items",
-                columns: table => new
-                {
-                    Name = table.Column<string>(type: "varchar(255)", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Weight = table.Column<int>(type: "int", nullable: false),
-                    PriceValue = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    ImageUrl = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Items", x => x.Name);
-                    table.ForeignKey(
-                        name: "FK_Items_Price_PriceValue",
-                        column: x => x.PriceValue,
-                        principalTable: "Price",
-                        principalColumn: "Value",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -360,11 +336,6 @@ namespace DMStorefront.Server.Migrations
                 name: "IX_DeviceCodes_Expiration",
                 table: "DeviceCodes",
                 column: "Expiration");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Items_PriceValue",
-                table: "Items",
-                column: "PriceValue");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Keys_Use",
@@ -426,9 +397,6 @@ namespace DMStorefront.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Price");
         }
     }
 }

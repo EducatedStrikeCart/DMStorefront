@@ -25,12 +25,10 @@
         <div>
             <label>Price :</label>
             <div>
-                <InputNumber @bind-Value="@item.Price.Gold" />
-                <ValidationMessage For="@(() => item.Price.Gold)" />
-                <InputNumber @bind-Value="@item.Price.Silver" />
-                <ValidationMessage For="@(() => item.Price.Silver)" />
-                <InputNumber @bind-Value="@item.Price.Copper" />
-                <ValidationMessage For="@(() => item.Price.Copper)" />
+                <InputNumber @bind-Value="@item.Price" />
+                <ValidationMessage For="@(() => item.Price)" />
+                    <label for="Price">Gold</label>
+               
             </div>
         </div>
     </div>
