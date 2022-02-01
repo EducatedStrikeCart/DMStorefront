@@ -1,0 +1,25 @@
+﻿@inject IdentityAuthenticationStateProvider authStateProvider
+@inject NavigationManager navigationManager
+
+<AuthorizeView>
+	<NotAuthorized>
+		<button @onclick="LoginClick">Login</button>
+	</NotAuthorized>
+	<Authorized>
+		<button @onclick="LogoutClick">Logout</button>
+	</Authorized>
+</AuthorizeView>
+
+
+@code {
+	async Task LogoutClick()
+	{
+		await authStateProvider.Logout();
+		navigationManager.NavigateTo("/");
+	}
+
+	public void LoginClick()
+	{
+		navigationManager.NavigateTo("/login");
+	}
+}
