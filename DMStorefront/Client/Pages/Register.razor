@@ -1,13 +1,8 @@
 ﻿@page "/register"
-@layout LoginLayout
 @inject NavigationManager navigationManager
 @inject IdentityAuthenticationStateProvider authStateProvider
 
 <PageTitle>Register</PageTitle>
-
-<h1 class="h2 font-weight-normal login-title">
-    Blazor with Identity Sample
-</h1>
 
 <EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="registerParameters">
     <DataAnnotationsValidator />
