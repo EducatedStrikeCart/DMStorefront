@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using DMStorefront.Shared.Models.Item;
 
 namespace DMStorefront.Server.Data
 {
@@ -26,5 +28,6 @@ namespace DMStorefront.Server.Data
 
         }
 
+        public DbSet<Item> Items { get; set; }
     }
 }

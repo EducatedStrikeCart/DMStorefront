@@ -1,52 +1,20 @@
-﻿@page "/newitem"
-@using DMStorefront.Shared;
+@page "/item/create"
+@using DMStorefront.Shared.Models.Item;
 @attribute [Authorize]
 
 
-<h3>Create New Item</h3>
-
-<EditForm Model="@newItemModel" OnValidSubmit="@HandleValidSubmit">
-	<DataAnnotationsValidator />
-	<ValidationSummary />
-	<p>
-		<label>
-			Name:
-			<InputText id="name" @bind-Value="newItemModel.Name" />
-		</label>
-	</p>
-	<p>
-		<label>
-			Weight:
-			<InputNumber id="weight" @bind-Value="newItemModel.Weight" />
-		</label>
-	</p>
-	<p>
-		<label>
-			Price:
-
-			<InputNumber id="copper" @bind-Value="newItemModel.Price.Copper" />
-			copper
-			<InputNumber id="silver" @bind-Value="newItemModel.Price.Silver" />
-			silver
-			<InputNumber id="gold" @bind-Value="newItemModel.Price.Gold" />
-		</label>
-	</p>
-	<p>
-		<label>
-			Description:
-			<InputTextArea id="description" @bind-Value="newItemModel.Description" />
-		</label>
-	</p>
-	<button type="submit"> Submit </button>
-</EditForm>
-
+@inject HttpClient http
+@inject NavigationManager uriHelper
+<h3>Create</h3>
+<Form ButtonText="Create Item" item="@item"
+            OnValidSubmit="@CreateAnItem" />
 @code {
-	public NewItemModel newItemModel = new();
 
-
-
-	private void HandleValidSubmit()
-	{
-		//process valid submission
-	}
+    Item item = new Item();
+    async Task CreateAnItem()
+    {
+        await http.PostAsJsonAsync("api/item", item);
+        uriHelper.NavigateTo("item");
+    }
 }
+
