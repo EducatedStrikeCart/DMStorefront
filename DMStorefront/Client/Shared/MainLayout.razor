@@ -1,21 +1,10 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager navigationManager
 @inject IdentityAuthenticationStateProvider authStateProvider
-<div class="page">
-	<div class="sidebar">
-		<NavMenu />
-	</div>
-	<main class="container-fluid">
-		<div class="top-row px-4">
-			<AuthorizeView>
-				<Authorized>
-					<button type="button" class="btn btn-link ml-md-auto" @onclick="@LogoutClick">Logout</button>
-				</Authorized>
-				<NotAuthorized>
-					<button type="button" class="btn btn-link ml-md-auto" @onclick="@LoginClick">Login</button>
-				</NotAuthorized>
-			</AuthorizeView>
-		</div>
+<div class="d-flex flex-column">
+	<NavMenu />
+	<main>
+
 		<article class="content px-4">
 			@Body
 		</article>
