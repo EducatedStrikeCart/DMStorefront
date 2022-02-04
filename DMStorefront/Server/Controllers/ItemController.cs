@@ -1,8 +1,10 @@
 ﻿using DMStorefront.Server.Data;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using DMStorefront.Shared.Models.Item;
+using DMStorefront.Shared.Models;
 using Microsoft.EntityFrameworkCore;
+using DMStorefront.Server.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace DMStorefront.Server.Controllers
 {
@@ -11,8 +13,10 @@ namespace DMStorefront.Server.Controllers
     public class ItemController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        public ItemController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public ItemController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
+            _userManager = userManager;
             this._context = context;
 
         }
@@ -33,7 +37,16 @@ namespace DMStorefront.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Item item)
         {
+            // Adds item to database
+
             _context.Add(item);
+
+            //// Adds item to User's Store's stock
+            //var user = await _userManager.GetUserAsync(User);
+            ////user.StoreStock.Items = item;
+            //user.StoreStock.Items.Add(item);
+            ////_context.Update(user);
+
             await _context.SaveChangesAsync();
             return Ok(item.Name);
         }

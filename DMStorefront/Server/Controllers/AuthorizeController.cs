@@ -1,5 +1,6 @@
 ﻿using DMStorefront.Server.Models;
 using DMStorefront.Shared;
+using DMStorefront.Shared.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,7 @@ namespace DMStorefront.Server.Controllers
         {
             var user = new ApplicationUser();
             user.UserName = parameters.UserName;
+            user.StoreStock = new Stock();
             var result = await _userManager.CreateAsync(user, parameters.Password);
             if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault()?.Description);
 
