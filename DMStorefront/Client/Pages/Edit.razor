@@ -1,0 +1,26 @@
+﻿@page "/item/edit/{itemName}"
+@using DMStorefront.Shared.Models.Item;
+@inject HttpClient http
+@inject NavigationManager uriHelper
+@inject IJSRuntime js
+
+
+<h3>Edit Item</h3>
+
+<Form ButtonText="Update" item="item"
+      OnValidSubmit="@EditItem" />
+
+@code {
+    [Parameter] public string itemName { get; set; }
+    Item item = new Item();
+    protected async override Task OnParametersSetAsync()
+    {
+        item = await http.GetFromJsonAsync<Item>($"api/item/{itemName}");
+    }
+    async Task EditItem()
+    {
+        await http.PutAsJsonAsync("api/item", item);
+        await js.InvokeVoidAsync("alert", $"Updated Successfully!");
+        uriHelper.NavigateTo("/item");
+    }
+}
