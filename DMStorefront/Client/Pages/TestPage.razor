@@ -1,0 +1,44 @@
+﻿@page "/test"
+@using DMStorefront.Client.Services
+
+@inject ProfileService ProfileService
+@implements IDisposable
+
+<h3>TestPage</h3>
+<button @onclick="Toggle">Toggle Mode</button>
+
+<div class="@(_preferences.UserMode ? "PlayerMode" : "d-none")">
+    Player visible content goes here
+</div>
+<div class="@(_preferences.UserMode ? "d-none" : "DungeonMasterMode")">
+    DungeonMaster visible content goes here
+</div>
+
+@code {
+
+    private Preferences _preferences = new();
+
+    [Parameter]
+    public EventCallback<bool> OnUserModeToggled { get; set; }
+
+    private void Toggle()
+    {
+      ProfileService?.ToggleUserMode();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ProfileService.OnChange += ProfileServiceOnOnChange;
+        _preferences = await ProfileService.GetPreferences();
+    }
+       private void ProfileServiceOnOnChange(Preferences newPreferences)
+    {
+        _preferences = newPreferences;
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        ProfileService.OnChange -= ProfileServiceOnOnChange;
+    }
+}
