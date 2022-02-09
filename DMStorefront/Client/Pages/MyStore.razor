@@ -1,0 +1,76 @@
+﻿@page "/store"
+@using DMStorefront.Shared.Models
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using DMStorefront.Shared
+@using System.Net.Http.Json
+
+
+
+
+@attribute [Authorize]
+@inject HttpClient Http
+@inject IJSRuntime js
+@inject AuthenticationStateProvider asp
+
+<h3>My Store</h3>
+
+<br>
+
+@if (stock == null)
+{
+    <text>Loading...</text>
+}
+else if (stock.Items.Count == 0)
+{
+    <text>No Records Found.</text>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                
+                <th>Name</th>
+                <th>Weight</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+           
+            @foreach (Item item in stock.Items)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Weight</td>
+                    <td>@item.Price</td>
+                    <td>@item.Description</td>
+                    <td>
+                        <a class="btn btn-success" href="">Buy?</a>
+                       
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@code {
+    Item[] items { get; set; } = new Item[0];
+    Stock stock { get; set; }
+    AuthenticationState? getasp { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        getasp = await asp.GetAuthenticationStateAsync();
+        var userName = getasp.User.Identity.Name;
+        var stockItems = await Http.GetFromJsonAsync<Item[]>($"api/stock/{userName}");
+        
+       
+         }
+
+
+
+
+}

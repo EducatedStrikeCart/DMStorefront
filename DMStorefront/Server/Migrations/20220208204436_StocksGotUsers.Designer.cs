@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DMStorefront.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220126233644_SecondTry")]
-    partial class SecondTry
+    [Migration("20220208204436_StocksGotUsers")]
+    partial class StocksGotUsers
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,8 +23,9 @@ namespace DMStorefront.Server.Migrations
 
             modelBuilder.Entity("DMStorefront.Server.Models.ApplicationUser", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -85,7 +86,7 @@ namespace DMStorefront.Server.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("DMStorefront.Shared.Models.Item.Item", b =>
+            modelBuilder.Entity("DMStorefront.Shared.Models.Item", b =>
                 {
                     b.Property<string>("Name")
                         .HasColumnType("varchar(255)");
@@ -105,151 +106,41 @@ namespace DMStorefront.Server.Migrations
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("Duende.IdentityServer.EntityFramework.Entities.DeviceFlowCodes", b =>
+            modelBuilder.Entity("DMStorefront.Shared.Models.Stock", b =>
                 {
-                    b.Property<string>("UserCode")
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<string>("ClientId")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Data")
-                        .IsRequired()
-                        .HasMaxLength(50000)
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<string>("DeviceCode")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<DateTime?>("Expiration")
-                        .IsRequired()
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("SessionId")
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<string>("SubjectId")
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
-                    b.HasKey("UserCode");
-
-                    b.HasIndex("DeviceCode")
-                        .IsUnique();
-
-                    b.HasIndex("Expiration");
-
-                    b.ToTable("DeviceCodes", (string)null);
-                });
-
-            modelBuilder.Entity("Duende.IdentityServer.EntityFramework.Entities.Key", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("Algorithm")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Data")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("DataProtected")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("IsX509Certificate")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("Use")
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<int>("Version")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Use");
-
-                    b.ToTable("Keys");
+                    b.ToTable("Stocks");
                 });
 
-            modelBuilder.Entity("Duende.IdentityServer.EntityFramework.Entities.PersistedGrant", b =>
+            modelBuilder.Entity("ItemStock", b =>
                 {
-                    b.Property<string>("Key")
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<string>("ClientId")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<DateTime?>("ConsumedTime")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("Data")
-                        .IsRequired()
-                        .HasMaxLength(50000)
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<DateTime?>("Expiration")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("SessionId")
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<string>("SubjectId")
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.HasKey("Key");
-
-                    b.HasIndex("ConsumedTime");
-
-                    b.HasIndex("Expiration");
-
-                    b.HasIndex("SubjectId", "ClientId", "Type");
-
-                    b.HasIndex("SubjectId", "SessionId", "Type");
-
-                    b.ToTable("PersistedGrants", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
+                    b.Property<string>("ItemsName")
                         .HasColumnType("varchar(255)");
+
+                    b.Property<int>("StocksId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ItemsName", "StocksId");
+
+                    b.HasIndex("StocksId");
+
+                    b.ToTable("ItemStock");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -272,7 +163,7 @@ namespace DMStorefront.Server.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -284,9 +175,8 @@ namespace DMStorefront.Server.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
@@ -295,7 +185,7 @@ namespace DMStorefront.Server.Migrations
                     b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -307,9 +197,8 @@ namespace DMStorefront.Server.Migrations
                     b.Property<string>("ClaimValue")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("Id");
 
@@ -318,22 +207,19 @@ namespace DMStorefront.Server.Migrations
                     b.ToTable("AspNetUserClaims", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("varchar(128)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("varchar(128)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -342,13 +228,13 @@ namespace DMStorefront.Server.Migrations
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
 
-                    b.Property<string>("RoleId")
-                        .HasColumnType("varchar(255)");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("char(36)");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -357,18 +243,16 @@ namespace DMStorefront.Server.Migrations
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("varchar(128)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("varchar(128)");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Value")
                         .HasColumnType("longtext");
@@ -378,16 +262,31 @@ namespace DMStorefront.Server.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("ItemStock", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("DMStorefront.Shared.Models.Item", null)
+                        .WithMany()
+                        .HasForeignKey("ItemsName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DMStorefront.Shared.Models.Stock", null)
+                        .WithMany()
+                        .HasForeignKey("StocksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.HasOne("DMStorefront.Server.Models.ApplicationUser", null)
                         .WithMany()
@@ -396,7 +295,7 @@ namespace DMStorefront.Server.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.HasOne("DMStorefront.Server.Models.ApplicationUser", null)
                         .WithMany()
@@ -405,9 +304,9 @@ namespace DMStorefront.Server.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -420,7 +319,7 @@ namespace DMStorefront.Server.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
                     b.HasOne("DMStorefront.Server.Models.ApplicationUser", null)
                         .WithMany()
