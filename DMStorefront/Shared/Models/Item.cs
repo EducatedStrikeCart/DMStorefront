@@ -4,22 +4,22 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DMStorefront.Shared.Models;
 
-namespace DMStorefront.Shared.Models.Item
+namespace DMStorefront.Shared.Models
 {
     public class Item
     {
         [Key]
         public string Name { get; set; }
-       
-        public int Weight { get;  set; }
 
-        
+        public int Weight { get; set; }
+
         public int Price { get; set; }
 
         public string Description { get; set; }
 
-      
+        public virtual ICollection<Stock>? Stocks { get; set; }
 
         public Item()
         {
@@ -28,11 +28,10 @@ namespace DMStorefront.Shared.Models.Item
             Weight = 0;
             Price = 0;
             Description = string.Empty;
-           
-            
+
+
         }
 
-        
+
     }
 }
-

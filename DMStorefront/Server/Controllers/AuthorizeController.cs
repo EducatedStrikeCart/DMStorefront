@@ -1,8 +1,11 @@
-﻿using DMStorefront.Server.Models;
+﻿using DMStorefront.Server.Data;
+using DMStorefront.Server.Models;
 using DMStorefront.Shared;
+using DMStorefront.Shared.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace DMStorefront.Server.Controllers
 {
@@ -10,13 +13,15 @@ namespace DMStorefront.Server.Controllers
     [ApiController]
     public class AuthorizeController : ControllerBase
     {
+        private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public AuthorizeController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AuthorizeController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         [HttpPost]
@@ -26,6 +31,14 @@ namespace DMStorefront.Server.Controllers
             if (user == null) return BadRequest("User does not exist");
             var singInResult = await _signInManager.CheckPasswordSignInAsync(user, parameters.Password, false);
             if (!singInResult.Succeeded) return BadRequest("Invalid password");
+            var stockStatus = await _context.Stocks.FirstOrDefaultAsync(s => s.UserName == user.UserName); 
+            if (stockStatus == null)
+            {
+                Stock userStock = new Stock();
+                userStock.UserName = user.UserName;
+                _context.Add(userStock);
+                await _context.SaveChangesAsync();
+            }
 
             await _signInManager.SignInAsync(user, parameters.RememberMe);
 
