@@ -17,11 +17,11 @@
 
 <br>
 
-@if (stock == null)
+@if (stockItems == null)
 {
     <text>Loading...</text>
 }
-else if (stock.Items.Count == 0)
+else if (stockItems.Length == 0)
 {
     <text>No Records Found.</text>
 }
@@ -40,8 +40,8 @@ else
         </thead>
         <tbody>
            
-            @foreach (Item item in stock.Items)
-            {
+            @foreach (Item item in stockItems)
+        {
                 <tr>
                     <td>@item.Name</td>
                     <td>@item.Weight</td>
@@ -57,20 +57,18 @@ else
     </table>
 }
 @code {
-    Item[] items { get; set; } = new Item[0];
+    Item[] items { get; set; }
     Stock stock { get; set; }
     AuthenticationState? getasp { get; set; }
+    Item[] stockItems { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         getasp = await asp.GetAuthenticationStateAsync();
         var userName = getasp.User.Identity.Name;
-        var stockItems = await Http.GetFromJsonAsync<Item[]>($"api/stock/{userName}");
+        stockItems = await Http.GetFromJsonAsync<Item[]>($"api/stock/{userName}");
         
        
          }
-
-
-
 
 }

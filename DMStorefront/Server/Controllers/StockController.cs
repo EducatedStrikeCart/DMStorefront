@@ -36,7 +36,7 @@ namespace DMStorefront.Server.Controllers
             {
                 item.Stocks = null;
             }
-            return Ok(stock);
+            return Ok(stock.Items);
         }
 
         [HttpPost]
