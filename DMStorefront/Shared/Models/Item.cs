@@ -32,6 +32,10 @@ namespace DMStorefront.Shared.Models
 
         }
 
-
+        public override bool Equals(object? obj)
+        {
+            return obj is Item item &&
+                   Name == item.Name;
+        }
     }
 }

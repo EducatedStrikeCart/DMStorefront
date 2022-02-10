@@ -48,7 +48,7 @@ else
                     <td>@item.Price</td>
                     <td>@item.Description</td>
                     <td>
-                        <a class="btn btn-success" href="">Buy?</a>
+                        <button class="btn btn-danger" @onclick="@(() => RemoveFromStore(item.Name, @getasp.User.Identity.Name))">Remove</button>
                        
                     </td>
                 </tr>
@@ -61,14 +61,26 @@ else
     Stock stock { get; set; }
     AuthenticationState? getasp { get; set; }
     Item[] stockItems { get; set; }
+    Stock[] stocks { get; set; }
+    String userName { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         getasp = await asp.GetAuthenticationStateAsync();
-        var userName = getasp.User.Identity.Name;
+        userName = getasp.User.Identity.Name;
         stockItems = await Http.GetFromJsonAsync<Item[]>($"api/stock/{userName}");
         
        
          }
+
+    async Task RemoveFromStore(string itemName, string userName)
+    {
+        var item = stockItems.FirstOrDefault(x => x.Name == itemName);
+        //var userStock = stocks.FirstOrDefault(a => a.UserName == userName);
+        userName = getasp.User.Identity.Name;
+
+        await Http.PostAsync($"api/stock/{userName}/removeitem/{itemName}", null);
+        await OnInitializedAsync();
+    }
 
 }
