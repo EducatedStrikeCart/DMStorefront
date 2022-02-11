@@ -58,7 +58,17 @@ namespace DMStorefront.Server.Controllers
             return Ok();
         }
 
+        [HttpPost("{userName}/removeitem/{itemName}")]
 
+        public async Task<IActionResult> PostRemoveItem(string itemName, string userName)
+        {
+            var userStock = await _context.Stocks.FirstOrDefaultAsync(a => a.UserName == userName);
+            await _context.Stocks.Include("Items").ToListAsync();
+            var newItem = await _context.Items.FirstOrDefaultAsync(a => a.Name == itemName);
+            userStock.Items.Remove(newItem);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
 
         [HttpPut]
         public async Task<IActionResult> Put(Stock stock)

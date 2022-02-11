@@ -52,14 +52,14 @@ else
                         <a class="btn btn-success" href="item/edit/@item.Name">Edit</a>
                         <button class="btn btn-danger" @onclick="@(() => Delete(item.Name))">Delete</button>
                        <!--- //make if statement to check it item is in Stock. if no, "Add to store" if yes, "remove from store"-->
-                       @if (item.Stocks == null)
+                       @if (stockItems.Contains(item))
                       {
-                          <button type="button" class="btn btn-info" @onclick="@(() => AddToStore(item.Name, @getasp.User.Identity.Name))">Add to Store</button>
-                        
+                          
+                         <button type="button" class="btn btn-outline-info" @onclick="@(() => RemoveFromStore(item.Name, @getasp.User.Identity.Name))">Remove From Store</button>
                       }
                       else{
-
-                           <button type="button" class="btn btn-outline-info">Remove</button> 
+                          <button type="button" class="btn btn-info" @onclick="@(() => AddToStore(item.Name, @getasp.User.Identity.Name))">Add to Store</button>
+                           
                       }
                     </td>
                 </tr>
@@ -71,9 +71,16 @@ else
     Item[] items { get; set; } = new Item[0];
     Stock[] stocks { get; set; } = new Stock[0];
     AuthenticationState? getasp { get; set; }
+    Item[] stockItems { get; set; }
+    String userName { get; set; }
+
+
     protected override async Task OnInitializedAsync()
     {
         var newItems = await Http.GetFromJsonAsync<Item[]>("api/item");
+        getasp = await asp.GetAuthenticationStateAsync();
+        userName = getasp.User.Identity.Name;
+        stockItems = await Http.GetFromJsonAsync<Item[]>($"api/stock/{userName}");
            getasp = await asp.GetAuthenticationStateAsync();
         if (newItems != null)
         {
@@ -94,12 +101,20 @@ else
     async Task AddToStore(string itemName, string userName)
     {
         var item = items.FirstOrDefault(x => x.Name == itemName);
-        var stock = stocks.FirstOrDefault(a => a.UserName == userName);
+        //var stock = stocks.FirstOrDefault(a => a.UserName == userName);
 
         await Http.PostAsync($"api/stock/{userName}/additem/{itemName}", null);
         await OnInitializedAsync();
     }
 
-   
+    async Task RemoveFromStore(string itemName, string userName)
+    {
+        var item = stockItems.FirstOrDefault(x => x.Name == itemName);
+        //var userStock = stocks.FirstOrDefault(a => a.UserName == userName);
+        userName = getasp.User.Identity.Name;
+
+        await Http.PostAsync($"api/stock/{userName}/removeitem/{itemName}", null);
+        await OnInitializedAsync();
+    }
     
 }
