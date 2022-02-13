@@ -1,41 +1,82 @@
-﻿@inject CartApi _cartApi;
+﻿@using DMStorefront.Client.Services.ServiceModels
+@inject CartApi _cartApi;
+@inject HttpClient _http;
+@inject AuthenticationStateProvider _asp;
 @implements IDisposable
 
-<div>
-	<h3>PlayerCartComponent</h3>
+<div class="container-fluid">
+	<!-- TODO: Implement better way of setting gold-->
+	<SetGoldButtonComponent inventory=@PlayerInventory OnValidSubmit="SetPlayerGold" />
+	<h2>Cart</h2>
+	<div class="d-flex justify-content-end">
+		Gold: @PlayerInventory.Wallet
+	</div>
 
 	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>Name</th>
+				<th>Price</th>
 				<th>Quantity</th>
+				<th>Subtotal</th>
 			</tr>
 		</thead>
 		<tbody>
 			@if (ItemsBought.Count == 0)
 			{
 				<tr>
-					<div>Cart Empty</div>
+					Cart Empty
 				</tr>
 			}
 			else
 			{
-				@foreach (KeyValuePair<string, int> entry in ItemsBought)
+				@foreach (CartEntry entry in ItemsBought)
 				{
 					<tr>
-						<td>@entry.Key</td> <!-- Item name-->
-				<td>@entry.Value</td> <!-- Item quantity-->
-				<button @onclick="() => IncreaseQuantity(entry.Key)">+</button>
-						<button @onclick="() => DecreaseQuantity(entry.Key)">-</button>
+						<td>
+							@entry.Item.Name
+						</td>
+						<td>
+							@entry.Item.Price Gold
+						</td>
+						<td>
+							<div class="d-flex flex-row">
+								<div>
+									<button @onclick="() => IncreaseQuantity(entry.Item)">+</button>
+									@entry.Quantity
+									<button @onclick="() => DecreaseQuantity(entry.Item)">-</button>
+								</div>
+							</div>
+
+
+						</td>
+
+						<td>
+							@entry.PriceSubTotal Gold
+						</td>
 					</tr>
+					
 				}
+				<tr>
+						<td>Total: @total Gold</td>
+					</tr>
 			}
 		</tbody>
 	</table>
 </div>
 
 @code {
-	Dictionary<string, int> ItemsBought = new();
+	List<CartEntry> ItemsBought = new();
+	AuthenticationState? getasp { get; set; }
+	Inventory PlayerInventory { get; set; } = new Inventory(0, "none");
+	int total { get; set; } = 0;
+
+
+	protected override async Task OnInitializedAsync()
+	{
+		await UpdateWallet();
+	}
+
 	protected override void OnInitialized()
 	{
 
@@ -45,17 +86,39 @@
 
 	public void UpdateCart()
 	{
-		InvokeAsync(async () => { ItemsBought = await _cartApi.GetCart(); StateHasChanged(); });
+		InvokeAsync(async () => 
+		{
+			ItemsBought = await _cartApi.GetCart();
+			total = ItemsBought.Sum(entry => entry.PriceSubTotal);
+			StateHasChanged(); 
+		});
+		
 	}
 
-	public async Task IncreaseQuantity(string itemName)
+	public async Task IncreaseQuantity(Item item)
 	{
-		await _cartApi.Add(itemName);
+		await _cartApi.Add(item);
 	}
 
-	public async Task DecreaseQuantity(string itemName)
+	public async Task DecreaseQuantity(Item item)
 	{
-		await _cartApi.Remove(itemName);
+		await _cartApi.Remove(item);
+	}
+
+	public async Task UpdateWallet()
+	{
+		var getAsp = await _asp.GetAuthenticationStateAsync();
+		var userName = getAsp.User.Identity.Name;
+		var inventoryResult = await _http.GetFromJsonAsync<Inventory>($"api/inventory/{userName}");
+		if (inventoryResult != null)
+		{
+			PlayerInventory = inventoryResult;
+		}
+	}
+
+	async Task SetPlayerGold()
+	{
+		await _http.PutAsJsonAsync($"api/inventory/", PlayerInventory);
 	}
 
 	public void Dispose()
