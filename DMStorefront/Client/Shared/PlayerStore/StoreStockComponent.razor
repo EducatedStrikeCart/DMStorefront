@@ -6,8 +6,8 @@
 @inject AuthenticationStateProvider asp
 @inject CartApi _cartApi
 
-<div>
-	<h3>StoreStock Component</h3>
+<div class = "container-fluid">
+	<h3>Store Inventory</h3>
 	@if (StockItems == null)
 	{
 		<text>Loading...</text>
@@ -53,7 +53,7 @@
 	[Parameter] public Item[]? StockItems { get; set; }
 	public async void AddItemToCart(Item item)
 	{
-		await _cartApi.Add(item.Name);
+		await _cartApi.Add(item);
 		StateHasChanged();
 	}
 }

@@ -1,13 +1,16 @@
 ﻿using Blazored.LocalStorage;
+using DMStorefront.Client.Services.Contracts;
+using DMStorefront.Client.Services.ServiceModels;
 using DMStorefront.Shared.Models;
 using System.Net.Http.Json;
 
 namespace DMStorefront.Client.Services.Implementations
 {
-    public class CartApi
+
+    public class CartApi : ICartApi
     {
         public event Action? OnChange;
-        public Dictionary<string, int>? CartItems { get; set; }
+        public List<CartEntry>? CartItems { get; set; }
 
         private readonly ILocalStorageService _localStorageService;
 
@@ -16,34 +19,36 @@ namespace DMStorefront.Client.Services.Implementations
             _localStorageService = localStorageService;
         }
 
-        public async Task Add(string itemName)
+        public async Task Add(Item item)
         {
-            Dictionary<string, int> newCart = await GetCart();
-            if (newCart.ContainsKey(itemName))
+            List<CartEntry> newCart = await GetCart();
+            var entry = newCart.FirstOrDefault(e => e.Item.Name == item.Name);
+            if (entry != null)
             {
-                newCart[itemName] += 1;
+                entry.Quantity += 1;
             }
             else
             {
-                newCart.Add(itemName, 1);
+                newCart.Add(new CartEntry(item, 1));
             }
             await _localStorageService.SetItemAsync("cart", newCart);
 
             OnChange?.Invoke();
         }
 
-        public async Task Remove(string itemName)
+        public async Task Remove(Item item)
         {
-            Dictionary<string, int> newCart = await GetCart();
-            if (newCart.ContainsKey(itemName))
+            List<CartEntry> newCart = await GetCart();
+            var entry = newCart.FirstOrDefault(e => e.Item.Name == item.Name);
+            if (entry != null)
             {
-                if (newCart[itemName] == 1)
+                if (entry.Quantity == 1)
                 {
-                    newCart.Remove(itemName);
+                    newCart.Remove(entry);
                 }
                 else
                 {
-                    newCart[itemName] -= 1;
+                    entry.Quantity -= 1;
                 }
             }
             await _localStorageService.SetItemAsync("cart", newCart);
@@ -51,20 +56,19 @@ namespace DMStorefront.Client.Services.Implementations
             OnChange?.Invoke();
         }
 
-        public async Task<Dictionary<string, int>> GetCart()
+        public async Task<List<CartEntry>> GetCart()
         {
-            Dictionary<string, int> cart = new();
-            cart = await _localStorageService.GetItemAsync<Dictionary<string, int>>("cart");
+            List<CartEntry> cart;
+            cart = await _localStorageService.GetItemAsync<List<CartEntry>>("cart");
             if (cart == null)
-
             {
-                Dictionary<string, int> newCart = new();
+                List<CartEntry> newCart = new();
                 await _localStorageService.SetItemAsync("cart", newCart);
                 return newCart;
             }
             else
             {
-                return await _localStorageService.GetItemAsync<Dictionary<string, int>>("cart");
+                return await _localStorageService.GetItemAsync<List<CartEntry>>("cart");
             }
 
         }

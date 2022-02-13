@@ -1,12 +1,12 @@
-﻿using DMStorefront.Shared.Models;
+﻿using DMStorefront.Client.Services.ServiceModels;
+using DMStorefront.Shared.Models;
 
 namespace DMStorefront.Client.Services.Contracts
 {
     public interface ICartApi
     {
-        Task Add(string item);
-        Task UpdateQuantity(string item);
-        Task Remove(string item);
-        Task<List<Item>> GetItems(string itemString);
+        Task Add(Item item);
+        Task Remove(Item item);
+        Task<List<CartEntry>> GetCart();
     }
 }

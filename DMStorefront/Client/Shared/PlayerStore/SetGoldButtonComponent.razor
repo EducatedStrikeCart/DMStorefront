@@ -1,0 +1,15 @@
+﻿<EditForm Model="@inventory" OnValidSubmit="@OnValidSubmit">
+	<DataAnnotationsValidator />
+	<div>
+		<InputNumber @bind-Value="@inventory.Wallet" />
+		<ValidationMessage For="@(() => inventory.Wallet)" />
+		<button type="submit">
+			Set Gold
+		</button>
+	</div>
+
+</EditForm>
+@code {
+	[Parameter] public Inventory inventory { get; set; }
+	[Parameter] public EventCallback OnValidSubmit { get; set; }
+}
