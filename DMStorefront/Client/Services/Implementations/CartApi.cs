@@ -1,10 +1,11 @@
 ﻿using Blazored.LocalStorage;
+using DMStorefront.Client.Services.Contracts;
 using DMStorefront.Shared.Models;
 using System.Net.Http.Json;
 
 namespace DMStorefront.Client.Services.Implementations
 {
-    public class CartApi
+    public class CartApi: ICartApi
     {
         public event Action? OnChange;
         public Dictionary<string, int>? CartItems { get; set; }
