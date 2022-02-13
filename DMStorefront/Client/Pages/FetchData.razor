@@ -11,6 +11,10 @@
 @inject AuthenticationStateProvider asp
 
 
+   
+   
+
+
 <h3>Items</h3>
 <small>Add items.</small>
 
@@ -18,6 +22,7 @@
     <a class="btn btn-success" href="/item/create"><i class="oi oi-plus"></i> Create New</a>
 </div>
 <br>
+ 
 @if (items == null)
 {
     <text>Loading...</text>
@@ -28,7 +33,7 @@ else if (items.Length == 0)
 }
 else
 {
-    <table class="table table-striped">
+    <table class="table table-dark">
         <thead>
             <tr>
                 
@@ -66,6 +71,7 @@ else
             }
         </tbody>
     </table>
+   
 }
 @code {
     Item[] items { get; set; } = new Item[0];
