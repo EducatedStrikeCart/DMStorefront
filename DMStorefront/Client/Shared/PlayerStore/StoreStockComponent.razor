@@ -1,0 +1,59 @@
+﻿@using DMStorefront.Client.Services.Contracts
+
+@attribute [Authorize]
+@inject HttpClient Http
+@inject IJSRuntime js
+@inject AuthenticationStateProvider asp
+@inject CartApi _cartApi
+
+<div>
+	<h3>StoreStock Component</h3>
+	@if (StockItems == null)
+	{
+		<text>Loading...</text>
+	}
+	else if (StockItems.Length == 0)
+	{
+		<text>No Records Found.</text>
+	}
+	else
+	{
+		<table class="table table-striped">
+			<thead>
+				<tr>
+
+					<th>Name</th>
+					<th>Weight</th>
+					<th>Price</th>
+					<th>Description</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+
+				@foreach (Item item in StockItems)
+				{
+					<tr>
+						<td>@item.Name</td>
+						<td>@item.Weight</td>
+						<td>@item.Price</td>
+						<td>@item.Description</td>
+						<td>
+							<button class="btn btn-success" @onclick="() => AddItemToCart(item)">Buy</button>
+
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	}
+
+</div>
+@code {
+	[Parameter] public Item[]? StockItems { get; set; }
+	public async void AddItemToCart(Item item)
+	{
+		await _cartApi.Add(item.Name);
+		StateHasChanged();
+	}
+}

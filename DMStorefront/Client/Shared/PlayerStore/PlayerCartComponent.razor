@@ -1,0 +1,65 @@
+﻿@inject CartApi _cartApi;
+@implements IDisposable
+
+<div>
+	<h3>PlayerCartComponent</h3>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Quantity</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if (ItemsBought.Count == 0)
+			{
+				<tr>
+					<div>Cart Empty</div>
+				</tr>
+			}
+			else
+			{
+				@foreach (KeyValuePair<string, int> entry in ItemsBought)
+				{
+					<tr>
+						<td>@entry.Key</td> <!-- Item name-->
+				<td>@entry.Value</td> <!-- Item quantity-->
+				<button @onclick="() => IncreaseQuantity(entry.Key)">+</button>
+						<button @onclick="() => DecreaseQuantity(entry.Key)">-</button>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+</div>
+
+@code {
+	Dictionary<string, int> ItemsBought = new();
+	protected override void OnInitialized()
+	{
+
+		_cartApi.OnChange += UpdateCart;
+		UpdateCart();
+	}
+
+	public void UpdateCart()
+	{
+		InvokeAsync(async () => { ItemsBought = await _cartApi.GetCart(); StateHasChanged(); });
+	}
+
+	public async Task IncreaseQuantity(string itemName)
+	{
+		await _cartApi.Add(itemName);
+	}
+
+	public async Task DecreaseQuantity(string itemName)
+	{
+		await _cartApi.Remove(itemName);
+	}
+
+	public void Dispose()
+	{
+		_cartApi.OnChange -= StateHasChanged;
+	}
+}
