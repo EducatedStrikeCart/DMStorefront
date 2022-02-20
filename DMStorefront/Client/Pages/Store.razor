@@ -1,0 +1,46 @@
+﻿@page "/Store"
+@using DMStorefront.Client.Shared
+@using DMStorefront.Client.Services.Implementations;
+@using DMStorefront.Client.Services.ServiceModels;
+@using DMStorefront.Client.Shared.DMStore
+@using DMStorefront.Shared.Models
+
+@attribute [Authorize]
+@inject HttpClient Http
+@inject IJSRuntime js
+@inject AuthenticationStateProvider asp
+@inject ProfileService ProfileService
+@implements IDisposable
+ 
+<ModeSwitchButtonComponent OnUserModeToggled="OnUserModeToggled" />
+
+<div class="@(_preferences.UserMode ? "PlayerMode" : "d-none")">
+	<PlayerStoreLayout />
+</div>
+<div class="@(_preferences.UserMode ? "d-none" : "DungeonMasterMode")">
+	<DMStoreLayout />
+</div>
+
+@code {
+	private Preferences _preferences = new();
+	[Parameter] public EventCallback<bool> OnUserModeToggled { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		ProfileService.OnChange += ProfileServiceOnChange;
+		_preferences = await ProfileService.GetPreferences();
+	}
+
+
+	private void ProfileServiceOnChange(Preferences newPreferences)
+	{
+		_preferences = newPreferences;
+		StateHasChanged();
+	}
+
+
+	public void Dispose()
+	{
+		ProfileService.OnChange -= ProfileServiceOnChange;
+	}
+}
