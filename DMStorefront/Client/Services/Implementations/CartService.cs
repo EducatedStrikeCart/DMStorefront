@@ -7,14 +7,14 @@ using System.Net.Http.Json;
 namespace DMStorefront.Client.Services.Implementations
 {
 
-    public class CartApi : ICartApi
+    public class CartService : ICartService
     {
         public event Action? OnChange;
         public List<CartEntry>? CartItems { get; set; }
 
         private readonly ILocalStorageService _localStorageService;
 
-        public CartApi(ILocalStorageService localStorageService)
+        public CartService(ILocalStorageService localStorageService)
         {
             _localStorageService = localStorageService;
         }

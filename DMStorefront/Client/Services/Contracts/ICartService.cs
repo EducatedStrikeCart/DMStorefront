@@ -3,7 +3,7 @@ using DMStorefront.Shared.Models;
 
 namespace DMStorefront.Client.Services.Contracts
 {
-    public interface ICartApi
+    public interface ICartService
     {
         Task Add(Item item);
         Task Remove(Item item);
