@@ -17,12 +17,11 @@ builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<IdentityAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<IdentityAuthenticationStateProvider>());
 builder.Services.AddScoped<IAuthorizeApi, AuthorizeApi>();
-builder.Services.AddScoped<CartApi>();
+builder.Services.AddScoped<CartService>();
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-builder.Services.AddBlazoredLocalStorage();
-
 
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddScoped<ProfileService>();
+builder.Services.AddScoped<StoreStateService>();
 
 await builder.Build().RunAsync();

@@ -8,7 +8,7 @@
 
 	<div class="navbar-collapse @NavMenuCssClass" @onclick="@ToggleNavMenu">
 		<ul class="navbar-nav flex-fill" @onclick="@ToggleNavMenu">
-			<li class="nav-item px-3">
+						<li class="nav-item px-3">
 				<a class="nav-link" href="counter">
 					<span class="oi oi-plus" aria-hidden="true"></span> Counter
 				</a>
@@ -22,13 +22,8 @@
 				<NotAuthorized><!-- Blank <NotAuthorized> needed to make Blazor hide <Authorized> content when not logged in--></NotAuthorized>
 				<Authorized>
 					<li class="nav-item px-3 ">
-						<a class="nav-link" href="/item">
-							<span class="oi oi-list-rich" aria-hidden="true"></span> Items
-						</a>
-					</li>
-					<li class="nav-item px-3 ">
 						<a class="nav-link" href="/store">
-							<span class="oi oi-list-rich" aria-hidden="true"></span> My Store
+							<span class="oi oi-list-rich" aria-hidden="true"></span> Manage Store
 						</a>
 					</li>
 					<li class="nav-item px-3 ">
@@ -36,7 +31,6 @@
 							<span class="oi oi-list-rich" aria-hidden="true"></span> Go Shopping
 						</a>
 					</li>
-
 				</Authorized>
 			</AuthorizeView>
 			<li class="ms-auto px-3">
