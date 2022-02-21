@@ -53,6 +53,7 @@ a:active {
     font-size: 150%;
     background-color: #333333;
     border-radius: 3px;
+    text-align: center;
 }
 
 .choose-side-box > h2 {
