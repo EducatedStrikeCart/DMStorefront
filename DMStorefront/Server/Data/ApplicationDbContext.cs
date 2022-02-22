@@ -30,5 +30,6 @@ namespace DMStorefront.Server.Data
 
         public DbSet<Item> Items { get; set; }
         public DbSet<Stock> Stocks { get; set; }
+        public DbSet<Inventory> Inventories {get; set; }
     }
 }

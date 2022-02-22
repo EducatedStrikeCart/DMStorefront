@@ -1,12 +1,13 @@
 @page "/item/create"
 @using DMStorefront.Shared.Models;
+@using DMStorefront.Client.Shared.DMStore
 @attribute [Authorize]
 
 
 @inject HttpClient http
 @inject NavigationManager uriHelper
 <h3>Create a New Item</h3>
-<Form ButtonText="Create Item" item="@item"
+<ItemForm ButtonText="Create Item" item="@item"
             OnValidSubmit="@CreateAnItem" />
 @code {
 
@@ -14,7 +15,7 @@
     async Task CreateAnItem()
     {
         await http.PostAsJsonAsync("api/item", item);
-        uriHelper.NavigateTo("item");
+        uriHelper.NavigateTo("store");
     }
 }
 

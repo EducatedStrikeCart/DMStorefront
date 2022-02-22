@@ -39,7 +39,6 @@ namespace DMStorefront.Server.Controllers
                 _context.Add(userStock);
                 await _context.SaveChangesAsync();
             }
-
             await _signInManager.SignInAsync(user, parameters.RememberMe);
 
             return Ok();
@@ -53,6 +52,9 @@ namespace DMStorefront.Server.Controllers
             user.UserName = parameters.UserName;
             var result = await _userManager.CreateAsync(user, parameters.Password);
             if (!result.Succeeded) return BadRequest(result.Errors.FirstOrDefault()?.Description);
+            Inventory newInventory = new Inventory(0, user.UserName);
+            _context.Add(newInventory);
+            await _context.SaveChangesAsync();
 
             return await Login(new LoginParameters
             {
