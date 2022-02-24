@@ -7,12 +7,12 @@
 @inject IJSRuntime js
 @inject AuthenticationStateProvider asp
 
-<h3>PlayerStore</h3>
+<h3>Find a Store by Username</h3>
 <div class="d-flex flex-row justify-content-around ">
 	
 	<div>
 	
-
+		<label>DM's Username:</label>
          <input type="text" @bind:event="oninput" @bind="@UserName" />
 
 @if (disableState == true)
