@@ -11,7 +11,7 @@
 @inject AuthenticationStateProvider asp
 @inject ProfileService ProfileService
 @implements IDisposable
- 
+
 <ModeSwitchButtonComponent OnUserModeToggled="OnUserModeToggled" />
 
 <div class="@(_preferences.UserMode ? "PlayerMode" : "d-none")">

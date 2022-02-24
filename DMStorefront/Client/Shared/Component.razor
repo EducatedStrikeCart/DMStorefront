@@ -1,0 +1,29 @@
+﻿@page "/FindPlayerStore"
+@using DMStorefront.Client.Shared.PlayerStore
+@using DMStorefront.Shared.Models
+
+@attribute [Authorize]
+@inject HttpClient Http
+@inject IJSRuntime js
+@inject AuthenticationStateProvider asp
+
+
+<div class="d-flex flex-row justify-content-around ">
+	<h3>PlayerStore</h3>
+	<StoreStockComponent StockItems=@StockItems />
+	<PlayerCartComponent/>
+</div>
+
+
+@code {
+	AuthenticationState? getasp { get; set; }
+	Item[]? StockItems { get; set; }
+	List<Item>? CartItems { get; set; }
+
+	protected override async Task OnInitializedAsync()
+	{
+		getasp = await asp.GetAuthenticationStateAsync();
+		var userName = "";
+		StockItems = await Http.GetFromJsonAsync<Item[]>($"api/stock/{userName}");
+	}
+}

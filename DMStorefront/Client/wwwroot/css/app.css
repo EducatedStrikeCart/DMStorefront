@@ -53,7 +53,13 @@ a:active {
     font-size: 150%;
     background-color: #333333;
     border-radius: 3px;
-    text-align: center;
+    justify-content: center;
+}
+
+.item-tables{
+    border-color: white;
+    border-width: 3px;
+    margin: 50px;
 }
 
 .choose-side-box > h2 {

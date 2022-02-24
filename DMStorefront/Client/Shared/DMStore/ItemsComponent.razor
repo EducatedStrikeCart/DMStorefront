@@ -11,13 +11,15 @@
 @inject AuthenticationStateProvider asp
 @inject StoreStateService _storeStateService
 
-<div>
-	<h3>Items</h3>
-	<small>Add items.</small>
+<!--WHAT THIS COMPONENT DOES: holds item table-->
 
-	<div class="form-group">
-		<a class="btn btn-success" href="/item/create"><i class="oi oi-plus"></i> Create New</a>
-	</div>
+
+
+	
+ 
+ <div >
+	 	<h3>All Items <a class="btn btn-success" href="/item/create"> Create a New Item</a></h3>
+	
 	<br>
 	@if (items == null)
 	{
