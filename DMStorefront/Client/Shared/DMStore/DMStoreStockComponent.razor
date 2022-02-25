@@ -10,10 +10,10 @@
 @inject AuthenticationStateProvider asp
 @inject StoreStateService _storeStateService
 @implements IDisposable
-<!--WHAT THIS COMPONENT DOES: hold store stock table-->
-<div>
-	<h3>@getasp.User.Identity.Name's Store Inventory</h3>
 
+<div class="page-title">
+	<h1>@getasp.User.Identity.Name's Store Inventory</h1>
+	</div>
 	<br>
 	<div>
 
@@ -59,7 +59,7 @@
 		</table>
 	}
 	</div>
-</div>
+
 @code {
 	Item[] items { get; set; }
 	Stock stock { get; set; }
