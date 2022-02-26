@@ -1,6 +1,6 @@
 ﻿<EditForm Model="@inventory" OnValidSubmit="@OnValidSubmit">
 	<DataAnnotationsValidator />
-	<div>
+	<div style = "font-family: 'Zen Loop', cursive padding: 50px">
 		<InputNumber @bind-Value="@inventory.Wallet" />
 		<ValidationMessage For="@(() => inventory.Wallet)" />
 		<button type="submit">

@@ -8,6 +8,11 @@ html, body {
 }
 
 
+li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
 
 h1:focus {
     outline: none;
@@ -54,15 +59,36 @@ a:active {
     background-color: #333333;
     border-radius: 3px;
     text-align: center;
+    list-style-type: none;
+}
+
+.item-tables{
+    border-color: white;
+    border-width: 3px;
+    margin: 50px;
+   
 }
 
 .choose-side-box > h2 {
     font-size: 48px;
     padding-top: .25em;
+    justify-content: center;
 }
 
 .content {
     padding-top: 0;
+}
+
+.dm-search {
+    font-family: 'Zen Loop', cursive;
+    font-size: 160%;
+}
+
+.page-title {
+    font-family: 'Zen Loop', cursive;
+    padding: 2px;
+    text-align: center;
+    font-size: 250%
 }
 
 .valid.modified:not([type=checkbox]) {

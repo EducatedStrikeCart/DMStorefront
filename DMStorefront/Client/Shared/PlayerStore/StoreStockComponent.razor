@@ -7,7 +7,7 @@
 @inject CartService _cartApi
 
 <div class = "container-fluid">
-	<h3>Store Inventory</h3>
+	<h3 class = "page-title">Store Inventory</h3>
 	@if (StockItems == null)
 	{
 		<text>Loading...</text>
@@ -18,7 +18,7 @@
 	}
 	else
 	{
-		<table class="table table-striped">
+		<table class="table table-dark">
 			<thead>
 				<tr>
 

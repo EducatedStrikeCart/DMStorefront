@@ -6,13 +6,12 @@
 
 <div class="container-fluid">
 	<!-- TODO: Implement better way of setting gold-->
-	<SetGoldButtonComponent inventory=@PlayerInventory OnValidSubmit="SetPlayerGold" />
-	<h2>Cart</h2>
-	<div class="d-flex justify-content-end">
+	
+	<h3 class = "page-title">Cart</h3>
+	<div class="d-flex justify-content-end" style= "font-family: 'Zen Loop'">
 		Gold: @PlayerInventory.Wallet
 	</div>
-
-	<table class="table table-striped">
+	<table class="table table-striped table-dark">
 		<thead>
 			<tr>
 				<th>Name</th>

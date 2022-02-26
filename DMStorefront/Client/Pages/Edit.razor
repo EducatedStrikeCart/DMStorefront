@@ -1,4 +1,5 @@
 ﻿@page "/item/edit/{itemName}"
+@using DMStorefront.Client.Shared.DMStore
 @using DMStorefront.Shared.Models;
 @inject HttpClient http
 @inject NavigationManager uriHelper
@@ -7,7 +8,7 @@
 
 <h3>Edit Item</h3>
 
-<Form ButtonText="Update" item="item"
+<ItemForm ButtonText="Update" item="item"
       OnValidSubmit="@EditItem" />
 
 @code {
@@ -16,11 +17,12 @@
     protected async override Task OnParametersSetAsync()
     {
         item = await http.GetFromJsonAsync<Item>($"api/item/{itemName}");
+        StateHasChanged();
     }
     async Task EditItem()
     {
         await http.PutAsJsonAsync("api/item", item);
         await js.InvokeVoidAsync("alert", $"Updated Successfully!");
-        uriHelper.NavigateTo("/item");
+        uriHelper.NavigateTo("/store");
     }
 }

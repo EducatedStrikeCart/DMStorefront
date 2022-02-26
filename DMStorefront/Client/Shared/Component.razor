@@ -1,4 +1,4 @@
-﻿@page "/PlayerStore"
+﻿@page "/FindPlayerStore"
 @using DMStorefront.Client.Shared.PlayerStore
 @using DMStorefront.Shared.Models
 
@@ -9,6 +9,7 @@
 
 
 <div class="d-flex flex-row justify-content-around ">
+	<h3>PlayerStore</h3>
 	<StoreStockComponent StockItems=@StockItems />
 	<PlayerCartComponent/>
 </div>
@@ -22,7 +23,7 @@
 	protected override async Task OnInitializedAsync()
 	{
 		getasp = await asp.GetAuthenticationStateAsync();
-		var userName = getasp.User.Identity.Name;
+		var userName = "";
 		StockItems = await Http.GetFromJsonAsync<Item[]>($"api/stock/{userName}");
 	}
 }
