@@ -1,15 +1,19 @@
-﻿<EditForm Model="@inventory" OnValidSubmit="@OnValidSubmit">
-	<DataAnnotationsValidator />
-	<div style = "font-family: 'Zen Loop', cursive padding: 50px">
-		<InputNumber @bind-Value="@inventory.Wallet" />
-		<ValidationMessage For="@(() => inventory.Wallet)" />
-		<button type="submit">
-			Set Gold
-		</button>
-	</div>
+﻿<div class=@Class>
+	<EditForm Model="@Inventory" OnValidSubmit="@OnValidSubmit">
+		<DataAnnotationsValidator />
+		<div style="font-family: 'Zen Loop', cursive padding: 50px">
+			<InputNumber @bind-Value="@Inventory.Wallet" />
+			<ValidationMessage For="@(() => Inventory.Wallet)" />
+			<button type="submit">
+				Set Gold
+			</button>
+		</div>
+	</EditForm>
+</div>
 
-</EditForm>
+
 @code {
-	[Parameter] public Inventory inventory { get; set; }
+	[Parameter] public string Class { get; set; } = "";
+	[Parameter] public Inventory Inventory { get; set; } = new Inventory(0, "error");
 	[Parameter] public EventCallback OnValidSubmit { get; set; }
 }
