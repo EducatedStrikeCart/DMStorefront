@@ -6,12 +6,14 @@
 		<button @onclick="LoginClick">Login</button>
 	</NotAuthorized>
 	<Authorized>
-		<button @onclick="LogoutClick">Logout</button>
+		<button class=@LogoutClass @onclick="LogoutClick">Logout</button>
 	</Authorized>
 </AuthorizeView>
 
 
 @code {
+	[Parameter] public string LogoutClass { get; set; } = "";
+
 	async Task LogoutClick()
 	{
 		await authStateProvider.Logout();
