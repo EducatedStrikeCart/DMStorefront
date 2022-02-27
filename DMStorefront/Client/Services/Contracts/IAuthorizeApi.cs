@@ -10,6 +10,7 @@ namespace DMStorefront.Client.Services.Contracts
     {
         Task Login(LoginParameters loginParameters);
         Task Register(RegisterParameters registerParameters);
+        Task Update(UpdateAccountParameters updateParameters);
         Task Logout();
         Task<UserInfo> GetUserInfo();
     }

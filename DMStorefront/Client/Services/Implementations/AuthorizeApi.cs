@@ -45,6 +45,13 @@ namespace DMStorefront.Client.Services.Implementations
             result.EnsureSuccessStatusCode();
         }
 
+        public async Task Update(UpdateAccountParameters updateParameters)
+        {
+            var result = await _httpClient.PutAsJsonAsync("api/Authorize/Update", updateParameters);
+            if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());
+            result.EnsureSuccessStatusCode();
+        }
+
         public async Task<UserInfo> GetUserInfo()
         {
             var result = await _httpClient.GetFromJsonAsync<UserInfo>("api/Authorize/UserInfo");
