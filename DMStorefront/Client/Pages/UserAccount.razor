@@ -1,0 +1,85 @@
+﻿@page "/account"
+@using DMStorefront.Shared.Models
+@using DMStorefront.Client.Shared.PlayerStore
+@inject NavigationManager navigationManager
+@inject IdentityAuthenticationStateProvider authStateProvider
+@inject AuthenticationStateProvider authProvider
+@inject HttpClient http
+@attribute [Authorize]
+<PageTitle>Account</PageTitle>
+
+<div class="d-flex flex-column p-3">
+	<h2 class="page-title">Account Settings</h2>
+
+	<div class="align-self-center p-4">
+		<h4 class=" font-weight-normal text-center">Gold Setting</h4>
+		Your current gold is: @PlayerInventory.Wallet
+		<SetGoldButtonComponent Class="" Inventory=@PlayerInventory OnValidSubmit=SetPlayerGold />
+	</div>
+
+	<hr />
+
+	<EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="UpdateAccountParameters">
+		<DataAnnotationsValidator />
+		<h4 class=" font-weight-normal text-center">Change Password</h4>
+
+		<label for="inputPassword" class="sr-only">Password</label>
+		<InputText type="password" id="inputPassword" class="form-control" placeholder="Password" @bind-Value="@UpdateAccountParameters.Password" />
+		<ValidationMessage For="@(() => UpdateAccountParameters.Password)" />
+
+		<label for="inputPasswordConfirm" class="sr-only">Password Confirmation</label>
+		<InputText type="password" id="inputPasswordConfirm" class="form-control" placeholder="Password Confirmation" @bind-Value="@UpdateAccountParameters.PasswordConfirm" />
+		<ValidationMessage For="@(() => UpdateAccountParameters.PasswordConfirm)" />
+
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Change Password</button>
+
+		<label class="text-danger">@error</label>
+	</EditForm>
+</div>
+
+
+
+@functions {
+	string Username { get; set; }
+	AuthenticationState? AuthState { get; set; }
+	UpdateAccountParameters UpdateAccountParameters { get; set; } = new UpdateAccountParameters();
+	Inventory PlayerInventory { get; set; } = new Inventory(0, "none");
+	string error { get; set; }
+
+
+	protected override async Task OnInitializedAsync()
+	{
+		AuthState = await authProvider.GetAuthenticationStateAsync();
+		Username = AuthState.User.Identity.Name;
+		await UpdateWallet();
+	}
+
+	async Task OnSubmit()
+	{
+		error = null;
+		try
+		{
+			UpdateAccountParameters.UserName = Username;
+			await authStateProvider.Update(UpdateAccountParameters);
+			navigationManager.NavigateTo("");
+		}
+		catch (Exception ex)
+		{
+			error = ex.Message;
+		}
+	}
+
+	public async Task UpdateWallet()
+	{
+		var inventoryResult = await http.GetFromJsonAsync<Inventory>($"api/inventory/{Username}");
+		if (inventoryResult != null)
+		{
+			PlayerInventory = inventoryResult;
+		}
+	}
+
+	async Task SetPlayerGold()
+	{
+		await http.PutAsJsonAsync($"api/inventory/", PlayerInventory);
+	}
+}
