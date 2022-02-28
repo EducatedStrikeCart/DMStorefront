@@ -31,7 +31,7 @@ namespace DMStorefront.Server.Controllers
             if (user == null) return BadRequest("User does not exist");
             var singInResult = await _signInManager.CheckPasswordSignInAsync(user, parameters.Password, false);
             if (!singInResult.Succeeded) return BadRequest("Invalid password");
-            var stockStatus = await _context.Stocks.FirstOrDefaultAsync(s => s.UserName == user.UserName); 
+            var stockStatus = await _context.Stocks.FirstOrDefaultAsync(s => s.UserName == user.UserName);
             if (stockStatus == null)
             {
                 Stock userStock = new Stock();
@@ -61,6 +61,29 @@ namespace DMStorefront.Server.Controllers
                 UserName = parameters.UserName,
                 Password = parameters.Password
             });
+        }
+
+        [Authorize]
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateAccountParameters parameters)
+        {
+            var user = await _userManager.FindByNameAsync(parameters.UserName);
+            if (user == null) return BadRequest("User does not exist");
+            else
+            {
+                await _userManager.RemovePasswordAsync(user);
+                await _userManager.AddPasswordAsync(user, parameters.Password);
+                var result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    await _context.SaveChangesAsync();
+                    return Ok("Password change sucessful.");
+                }
+                else
+                {
+                    return BadRequest(result.Errors.FirstOrDefault()?.Description);
+                }
+            }
         }
 
         [Authorize]

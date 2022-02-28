@@ -1,4 +1,6 @@
-﻿<div class="navbar navbar-expand-lg navbar-dark bg-dark">
+﻿@inject AuthenticationStateProvider authStateProvider
+
+<div class="navbar navbar-expand-lg navbar-dark bg-dark">
 	<a class="navbar-brand" href="/">
 		<span class="oi oi-home" aria-hidden="true"></span> DMStorefront
 	</a>
@@ -8,7 +10,7 @@
 
 	<div class="navbar-collapse @NavMenuCssClass" @onclick="@ToggleNavMenu">
 		<ul class="navbar-nav flex-fill" @onclick="@ToggleNavMenu">
-						<li class="nav-item px-3">
+			<li class="nav-item px-3">
 				<a class="nav-link" href="counter">
 					<span class="oi oi-plus" aria-hidden="true"></span> Counter
 				</a>
@@ -31,10 +33,15 @@
 							<span class="oi oi-list-rich" aria-hidden="true"></span> Go Shopping
 						</a>
 					</li>
+					<li class="ms-auto">
+						<AccountButtonComponent Class="btn btn-link" Username=@Username />
+					</li>
+					<li class="py-2 btn-link">|</li>
+
 				</Authorized>
 			</AuthorizeView>
-			<li class="ms-auto px-3">
-				<LogoutComponent />
+			<li class="nav-item">
+				<LogoutComponent LogoutClass="btn btn-link"/>
 			</li>
 		</ul>
 	</div>
@@ -43,6 +50,13 @@
 
 @functions {
 	bool collapseNavMenu = true;
+	string Username { get; set; } = "";
+
+	protected override async Task OnInitializedAsync()
+	{
+		AuthenticationState authState = await authStateProvider.GetAuthenticationStateAsync();
+		Username = authState.User.Identity.Name;
+	}
 
 	string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 

@@ -70,7 +70,6 @@
 	Inventory PlayerInventory { get; set; } = new Inventory(0, "none");
 	int total { get; set; } = 0;
 
-
 	protected override async Task OnInitializedAsync()
 	{
 		await UpdateWallet();
@@ -91,7 +90,7 @@
 			total = ItemsBought.Sum(entry => entry.PriceSubTotal);
 			StateHasChanged(); 
 		});
-		
+
 	}
 
 	public async Task IncreaseQuantity(Item item)
@@ -113,11 +112,6 @@
 		{
 			PlayerInventory = inventoryResult;
 		}
-	}
-
-	async Task SetPlayerGold()
-	{
-		await _http.PutAsJsonAsync($"api/inventory/", PlayerInventory);
 	}
 
 	public void Dispose()

@@ -35,6 +35,12 @@ namespace DMStorefront.Client.States
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 
+        public async Task Update(UpdateAccountParameters updateParameters)
+        {
+            await _authorizeApi.Update(updateParameters);
+            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+        }
+
         public async Task Logout()
         {
             await _authorizeApi.Logout();
