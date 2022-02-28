@@ -4,7 +4,8 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background-color: #262626;
     color: white;
-    padding: 0px
+    padding: 0px;
+    height: 100vh;
 }
 
 
@@ -90,6 +91,35 @@ a:active {
     text-align: center;
     font-size: 250%
 }
+
+.page-subtitle {
+    font-family: 'Zen Loop';
+    font-size: 200%
+}
+
+.dms-button-generic {
+    font-family: 'Zen Loop';
+    font-size: 200%
+}
+
+.parchment-image {
+    max-height: 157px;
+    padding: 8px;
+}
+
+/* adds vertical bar between Bootstrap columns with 'col-md-border' applied*/
+@media (min-width: 768px) {
+    .col-md-border:not(:last-child) {
+        border-right: 1px solid rgba(215, 215, 215, .5);
+    }
+
+    .col-md-border + .col-md-border {
+        border-left: 1px solid rgba(215, 215, 215, .5);
+        margin-left: -1px;
+    }
+}
+
+
 
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;

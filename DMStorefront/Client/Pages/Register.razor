@@ -5,45 +5,45 @@
 <PageTitle>Register</PageTitle>
 
 <EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="registerParameters">
-    <DataAnnotationsValidator />
-    <h4 class="font-weight-normal text-center">Create Account</h4>
+	<DataAnnotationsValidator />
+	<h4 class="page-title">Create Account</h4>
 
-    <label for="inputUsername" class="sr-only">User Name</label>
-    <InputText id="inputUsername" class="form-control" placeholder="Username" autofocus @bind-Value="@registerParameters.UserName" />
-    <ValidationMessage For="@(() => registerParameters.UserName)" />
+	<label for="inputUsername" class="sr-only page-subtitle">User Name</label>
+	<InputText id="inputUsername" class="form-control" placeholder="Username" autofocus @bind-Value="@registerParameters.UserName" />
+	<ValidationMessage For="@(() => registerParameters.UserName)" />
 
-    <label for="inputPassword" class="sr-only">Password</label>
-    <InputText type="password" id="inputPassword" class="form-control" placeholder="Password" @bind-Value="@registerParameters.Password" />
-    <ValidationMessage For="@(() => registerParameters.Password)" />
+	<label for="inputPassword" class="sr-only page-subtitle">Password</label>
+	<InputText type="password" id="inputPassword" class="form-control" placeholder="Password" @bind-Value="@registerParameters.Password" />
+	<ValidationMessage For="@(() => registerParameters.Password)" />
 
-    <label for="inputPasswordConfirm" class="sr-only">Password Confirmation</label>
-    <InputText type="password" id="inputPasswordConfirm" class="form-control" placeholder="Password Confirmation" @bind-Value="@registerParameters.PasswordConfirm" />
-    <ValidationMessage For="@(() => registerParameters.PasswordConfirm)" />
+	<label for="inputPasswordConfirm" class="sr-only page-subtitle">Password Confirmation</label>
+	<InputText type="password" id="inputPasswordConfirm" class="form-control" placeholder="Password Confirmation" @bind-Value="@registerParameters.PasswordConfirm" />
+	<ValidationMessage For="@(() => registerParameters.PasswordConfirm)" />
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Create account</button>
+	<button class="dms-button-generic btn btn-lg btn-primary btn-block" type="submit">Create account</button>
 
-    <label class="text-danger">@error</label>
-    <NavLink href="login">
-        <h6 class="font-weight-normal text-center">Already have an account? Click here to login</h6>
-    </NavLink>
+	<label class="text-danger">@error</label>
+
 </EditForm>
+<NavLink href="login">
+	<h6 class=" page-subtitle font-weight-normal text-center">Already have an account? Click here to login</h6>
+</NavLink>
+@functions {
 
-@functions{
+	RegisterParameters registerParameters { get; set; } = new RegisterParameters();
+	string error { get; set; }
 
-    RegisterParameters registerParameters { get; set; } = new RegisterParameters();
-    string error { get; set; }
-
-    async Task OnSubmit()
-    {
-        error = null;
-        try
-        {
-            await authStateProvider.Register(registerParameters);
-            navigationManager.NavigateTo("");
-        }
-        catch (Exception ex)
-        {
-            error = ex.Message;
-        }
-    }
+	async Task OnSubmit()
+	{
+		error = null;
+		try
+		{
+			await authStateProvider.Register(registerParameters);
+			navigationManager.NavigateTo("");
+		}
+		catch (Exception ex)
+		{
+			error = ex.Message;
+		}
+	}
 }
