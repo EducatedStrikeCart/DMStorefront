@@ -1,67 +1,49 @@
 ﻿@page "/GoShopping"
+@attribute [Authorize]
 @using DMStorefront.Client.Shared.PlayerStore
 @using DMStorefront.Shared.Models
-
-@attribute [Authorize]
-@inject HttpClient Http
-@inject IJSRuntime js
-@inject AuthenticationStateProvider asp
+@inject HttpClient http
 
 
+<div style="page-title padding: 50px">
+	<h3 class="page-title">Find a Store by Username</h3>
+	<label class="dm-search">DM's Username:</label>
+	<input type="text" @bind:event="oninput" @bind="@UserName" />
 
-	
-	<div style = "page-title padding: 50px">
-		<h3 class = "page-title">Find a Store by Username</h3>
-		<label class = "dm-search">DM's Username:</label>
-         <input type="text" @bind:event="oninput" @bind="@UserName" />
-
-@if (disableState == true)
-{
-    <input type="button" value="Search" disabled>
-}
-else
-{
-    <input type="button" @onclick="GetStock" value="Search">
-}
+	@if (disableState == true)
+	{
+		<input type="button" value="Search" disabled>
+	}
+	else
+	{
+		<input type="button" @onclick="GetStock" value="Search">
+	}
 </div>
 
 <div class="d-flex flex-row justify-content-around ">
 	<StoreStockComponent StockItems=@StockItems />
-	<PlayerCartComponent/>
+	<PlayerCartComponent />
 </div>
 
 
-
 @code {
-	AuthenticationState? getasp { get; set; }
 	Item[]? StockItems { get; set; }
 	List<Item>? CartItems { get; set; }
-	//public string UserName { get; set; }
 	bool disableState = true;
-	private string _UserName;
-	public string UserName {
-
-		get{ return _UserName; }
+	private string _userName;
+	public string UserName
+	{
+		get { return _userName; }
 		set
 		{
-			_UserName = value;
-			disableState = _UserName?.Length < 1 ? true : false;
-
+			_userName = value;
+			disableState = _userName?.Length < 1 ? true : false;
 		}
-
 	}
-	
-
-	
-
 
 	public async void GetStock()
 	{
-		
-		StockItems = await Http.GetFromJsonAsync<Item[]>($"api/stock/{UserName}");
+		StockItems = await http.GetFromJsonAsync<Item[]>($"api/stock/{UserName}");
 		StateHasChanged();
 	}
-
-	
-
 }

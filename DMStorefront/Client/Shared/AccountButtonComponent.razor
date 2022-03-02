@@ -1,8 +1,10 @@
 ﻿@inject NavigationManager navigationManager
 
+
 <button class=@Class @onclick="NavigateToAccount">
 	 @Username
 </button>
+
 
 @code {
 	[Parameter] public string Username { get; set; } = "";

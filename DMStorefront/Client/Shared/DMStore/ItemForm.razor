@@ -1,21 +1,22 @@
 ﻿@using DMStorefront.Shared.Models;
 @using System.Linq
 
-<EditForm Model="@item" OnValidSubmit="@OnValidSubmit">
+
+<EditForm Model="@Item" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <div class="form-group">
         <label>Item Name :</label>
         <div>
-            <InputText @bind-Value="@item.Name" />
-            <ValidationMessage For="@(() => item.Name)" />
+            <InputText @bind-Value="@Item.Name" />
+            <ValidationMessage For="@(() => Item.Name)" />
         </div>
     </div>
     <div class="form-group ">
         <div>
             <label>Weight :</label>
             <div>
-                <InputNumber @bind-Value="@item.Weight" />
-                <ValidationMessage For="@(() => item.Weight)" />
+                <InputNumber @bind-Value="@Item.Weight" />
+                <ValidationMessage For="@(() => Item.Weight)" />
             </div>
         </div>
     </div>
@@ -23,8 +24,8 @@
         <div>
             <label>Price :</label>
             <div>
-                <InputNumber @bind-Value="@item.Price" />
-                <ValidationMessage For="@(() => item.Price)" />
+                <InputNumber @bind-Value="@Item.Price" />
+                <ValidationMessage For="@(() => Item.Price)" />
                     <label for="Price">Gold</label>
                
             </div>
@@ -34,8 +35,8 @@
         <div>
             <label>Description :</label>
             <div>
-                <InputText @bind-Value="@item.Description" />
-                <ValidationMessage For="@(() => item.Description)" />
+                <InputText @bind-Value="@Item.Description" />
+                <ValidationMessage For="@(() => Item.Description)" />
             </div>
         </div>
     </div>
@@ -43,8 +44,10 @@
         @ButtonText
     </button>
 </EditForm>
+
+
 @code {
-    [Parameter] public Item item { get; set; }
+    [Parameter] public Item Item { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
 }

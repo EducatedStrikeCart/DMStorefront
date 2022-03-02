@@ -2,6 +2,7 @@
 @inject NavigationManager navigationManager
 @inject IdentityAuthenticationStateProvider authStateProvider
 
+
 <PageTitle>Login</PageTitle>
 <div class="container-fluid">
 	<div class="row">
@@ -24,7 +25,7 @@
 				</div>
 
 				<button class="dms-button-generic btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-				<label class="text-danger">@error</label>
+				<label class="text-danger">@Error</label>
 			</EditForm>
 		</div>
 
@@ -37,14 +38,13 @@
 </div>
 
 
-
 @code {
 	LoginParameters loginParameters { get; set; } = new LoginParameters();
-	string error { get; set; }
+	string Error { get; set; }
 
 	async Task OnSubmit()
 	{
-		error = null;
+		Error = null;
 		try
 		{
 			await authStateProvider.Login(loginParameters);
@@ -52,7 +52,7 @@
 		}
 		catch (Exception ex)
 		{
-			error = ex.Message;
+			Error = ex.Message;
 		}
 	}
 

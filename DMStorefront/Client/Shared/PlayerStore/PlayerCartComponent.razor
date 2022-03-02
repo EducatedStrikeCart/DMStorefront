@@ -1,14 +1,13 @@
 ﻿@using DMStorefront.Client.Services.ServiceModels
-@inject CartService _cartApi;
-@inject HttpClient _http;
-@inject AuthenticationStateProvider _asp;
+@inject CartService cartService;
+@inject HttpClient http;
+@inject AuthenticationStateProvider asp;
 @implements IDisposable
 
+
 <div class="container-fluid">
-	<!-- TODO: Implement better way of setting gold-->
-	
-	<h3 class = "page-title">Cart</h3>
-	<div class="d-flex justify-content-end" style= "font-family: 'Zen Loop'">
+	<h3 class="page-title">Cart</h3>
+	<div class="d-flex justify-content-end" style="font-family: 'Zen Loop'">
 		Gold: @PlayerInventory.Wallet
 	</div>
 	<table class="table table-striped table-dark">
@@ -54,19 +53,19 @@
 							@entry.PriceSubTotal Gold
 						</td>
 					</tr>
-					
+
 				}
 				<tr>
-						<td>Total: @total Gold</td>
-					</tr>
+					<td>Total: @total Gold</td>
+				</tr>
 			}
 		</tbody>
 	</table>
 </div>
 
+
 @code {
 	List<CartEntry> ItemsBought = new();
-	AuthenticationState? getasp { get; set; }
 	Inventory PlayerInventory { get; set; } = new Inventory(0, "none");
 	int total { get; set; } = 0;
 
@@ -78,36 +77,35 @@
 	protected override void OnInitialized()
 	{
 
-		_cartApi.OnChange += UpdateCart;
+		cartService.OnChange += UpdateCart;
 		UpdateCart();
 	}
 
 	public void UpdateCart()
 	{
-		InvokeAsync(async () => 
+		InvokeAsync(async () =>
 		{
-			ItemsBought = await _cartApi.GetCart();
+			ItemsBought = await cartService.GetCart();
 			total = ItemsBought.Sum(entry => entry.PriceSubTotal);
-			StateHasChanged(); 
+			StateHasChanged();
 		});
-
 	}
 
 	public async Task IncreaseQuantity(Item item)
 	{
-		await _cartApi.Add(item);
+		await cartService.Add(item);
 	}
 
 	public async Task DecreaseQuantity(Item item)
 	{
-		await _cartApi.Remove(item);
+		await cartService.Remove(item);
 	}
 
 	public async Task UpdateWallet()
 	{
-		var getAsp = await _asp.GetAuthenticationStateAsync();
+		var getAsp = await asp.GetAuthenticationStateAsync();
 		var userName = getAsp.User.Identity.Name;
-		var inventoryResult = await _http.GetFromJsonAsync<Inventory>($"api/inventory/{userName}");
+		var inventoryResult = await http.GetFromJsonAsync<Inventory>($"api/inventory/{userName}");
 		if (inventoryResult != null)
 		{
 			PlayerInventory = inventoryResult;
@@ -116,6 +114,6 @@
 
 	public void Dispose()
 	{
-		_cartApi.OnChange -= StateHasChanged;
+		cartService.OnChange -= StateHasChanged;
 	}
 }
