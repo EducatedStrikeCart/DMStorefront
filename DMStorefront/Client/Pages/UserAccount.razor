@@ -1,11 +1,13 @@
 ﻿@page "/account"
+@attribute [Authorize]
 @using DMStorefront.Shared.Models
 @using DMStorefront.Client.Shared.PlayerStore
 @inject NavigationManager navigationManager
 @inject IdentityAuthenticationStateProvider authStateProvider
 @inject AuthenticationStateProvider authProvider
 @inject HttpClient http
-@attribute [Authorize]
+
+
 <PageTitle>Account</PageTitle>
 
 <div class="d-flex flex-column p-3">
@@ -33,18 +35,17 @@
 
 		<button class="btn btn-lg btn-primary btn-block" type="submit">Change Password</button>
 
-		<label class="text-danger">@error</label>
+		<label class="text-danger">@Error</label>
 	</EditForm>
 </div>
 
 
-
-@functions {
+@code {
 	string Username { get; set; }
 	AuthenticationState? AuthState { get; set; }
 	UpdateAccountParameters UpdateAccountParameters { get; set; } = new UpdateAccountParameters();
 	Inventory PlayerInventory { get; set; } = new Inventory(0, "none");
-	string error { get; set; }
+	string Error { get; set; }
 
 
 	protected override async Task OnInitializedAsync()
@@ -56,7 +57,7 @@
 
 	async Task OnSubmit()
 	{
-		error = null;
+		Error = null;
 		try
 		{
 			UpdateAccountParameters.UserName = Username;
@@ -65,7 +66,7 @@
 		}
 		catch (Exception ex)
 		{
-			error = ex.Message;
+			Error = ex.Message;
 		}
 	}
 

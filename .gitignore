@@ -27,4 +27,4 @@ bld/
 .vs/
 
 # Migrations
-.DMStorefront/Server/Migrations
+/DMStorefront/Server/Migrations

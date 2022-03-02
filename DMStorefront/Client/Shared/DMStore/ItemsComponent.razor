@@ -1,26 +1,25 @@
 ﻿@page "/item"
+@attribute [Authorize]
 @using DMStorefront.Shared.Models
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-@using DMStorefront.Shared
-@using System.Net.Http.Json
-
-@attribute [Authorize]
 @inject HttpClient Http
 @inject IJSRuntime js
 @inject AuthenticationStateProvider asp
 @inject StoreStateService _storeStateService
 
- <div class = "page-title">
-	 	<h1>All Items <a class="btn btn-success" href="/item/create"> Create a New Item </a></h1>
+
+<div class="page-title">
+	<h1>All Items <a class="btn btn-success" href="/item/create"> Create a New Item </a></h1>
 </div>
+
 <div>
 	<br>
-	@if (items == null)
+	@if (Items == null)
 	{
 		<text>Loading...</text>
 	}
-	else if (items.Length == 0)
+	else if (Items.Length == 0)
 	{
 		<text>No Records Found.</text>
 	}
@@ -39,7 +38,7 @@
 			</thead>
 			<tbody>
 
-				@foreach (Item item in items)
+				@foreach (Item item in Items)
 				{
 					<tr>
 						<td>@item.Name</td>
@@ -53,11 +52,11 @@
 							@if (stockItems.Contains(item))
 							{
 
-								<button type="button" class="btn btn-outline-info" @onclick="@(() => RemoveFromStore(item.Name, @getasp.User.Identity.Name))">Remove From Store</button>
+								<button type="button" class="btn btn-outline-info" @onclick="@(() => RemoveFromStore(item.Name, @GetAsp.User.Identity.Name))">Remove From Store</button>
 							}
 							else
 							{
-								<button type="button" class="btn btn-info" @onclick="@(() => AddToStore(item.Name, @getasp.User.Identity.Name))">Add to Store</button>
+								<button type="button" class="btn btn-info" @onclick="@(() => AddToStore(item.Name, @GetAsp.User.Identity.Name))">Add to Store</button>
 
 							}
 						</td>
@@ -67,10 +66,12 @@
 		</table>
 	}
 </div>
+
+
 @code {
-	Item[] items { get; set; } = new Item[0];
+	Item[] Items { get; set; } = new Item[0];
 	Stock[] stocks { get; set; } = new Stock[0];
-	AuthenticationState? getasp { get; set; }
+	AuthenticationState? GetAsp { get; set; }
 	Item[] stockItems { get; set; }
 	String userName { get; set; }
 
@@ -78,19 +79,19 @@
 	protected override async Task OnInitializedAsync()
 	{
 		var newItems = await Http.GetFromJsonAsync<Item[]>("api/item");
-		getasp = await asp.GetAuthenticationStateAsync();
-		userName = getasp.User.Identity.Name;
+		GetAsp = await asp.GetAuthenticationStateAsync();
+		userName = GetAsp.User.Identity.Name;
 		stockItems = await Http.GetFromJsonAsync<Item[]>($"api/stock/{userName}");
-		getasp = await asp.GetAuthenticationStateAsync();
+		GetAsp = await asp.GetAuthenticationStateAsync();
 		if (newItems != null)
 		{
-			items = newItems;
+			Items = newItems;
 		}
 
 	}
 	async Task Delete(string itemName)
 	{
-		var item = items.First(x => x.Name == itemName);
+		var item = Items.First(x => x.Name == itemName);
 		if (await js.InvokeAsync<bool>("confirm", $"Do you want to delete {item.Name}'s ({item.Name}) Record?"))
 		{
 			await Http.DeleteAsync($"api/item/{itemName}");
@@ -101,7 +102,7 @@
 
 	async Task AddToStore(string itemName, string userName)
 	{
-		var item = items.FirstOrDefault(x => x.Name == itemName);
+		var item = Items.FirstOrDefault(x => x.Name == itemName);
 		//var stock = stocks.FirstOrDefault(a => a.UserName == userName);
 
 		await Http.PostAsync($"api/stock/{userName}/additem/{itemName}", null);
@@ -113,7 +114,7 @@
 	{
 		var item = stockItems.FirstOrDefault(x => x.Name == itemName);
 		//var userStock = stocks.FirstOrDefault(a => a.UserName == userName);
-		userName = getasp.User.Identity.Name;
+		userName = GetAsp.User.Identity.Name;
 
 		await Http.PostAsync($"api/stock/{userName}/removeitem/{itemName}", null);
 		await OnInitializedAsync();

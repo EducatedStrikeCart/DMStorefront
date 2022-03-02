@@ -1,10 +1,8 @@
 ﻿@using DMStorefront.Client.Services.Contracts
-
 @attribute [Authorize]
-@inject HttpClient Http
-@inject IJSRuntime js
 @inject AuthenticationStateProvider asp
-@inject CartService _cartApi
+@inject CartService cartService
+
 
 <div class = "container-fluid">
 	<h3 class = "page-title">Store Inventory</h3>
@@ -47,13 +45,14 @@
 			</tbody>
 		</table>
 	}
-
 </div>
+
+
 @code {
 	[Parameter] public Item[]? StockItems { get; set; }
 	public async void AddItemToCart(Item item)
 	{
-		await _cartApi.Add(item);
+		await cartService.Add(item);
 		StateHasChanged();
 	}
 }

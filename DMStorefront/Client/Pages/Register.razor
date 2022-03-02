@@ -2,6 +2,7 @@
 @inject NavigationManager navigationManager
 @inject IdentityAuthenticationStateProvider authStateProvider
 
+
 <PageTitle>Register</PageTitle>
 
 <EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="registerParameters">
@@ -22,20 +23,22 @@
 
 	<button class="dms-button-generic btn btn-lg btn-primary btn-block" type="submit">Create account</button>
 
-	<label class="text-danger">@error</label>
+	<label class="text-danger">@Error</label>
 
 </EditForm>
 <NavLink href="login">
 	<h6 class=" page-subtitle font-weight-normal text-center">Already have an account? Click here to login</h6>
 </NavLink>
-@functions {
+
+
+@code {
 
 	RegisterParameters registerParameters { get; set; } = new RegisterParameters();
-	string error { get; set; }
+	string Error { get; set; }
 
 	async Task OnSubmit()
 	{
-		error = null;
+		Error = null;
 		try
 		{
 			await authStateProvider.Register(registerParameters);
@@ -43,7 +46,7 @@
 		}
 		catch (Exception ex)
 		{
-			error = ex.Message;
+			Error = ex.Message;
 		}
 	}
 }

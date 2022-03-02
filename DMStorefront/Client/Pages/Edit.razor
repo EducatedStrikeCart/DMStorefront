@@ -9,20 +9,21 @@
 <h3>Edit Item</h3>
 
 <ItemForm ButtonText="Update" item="item"
-      OnValidSubmit="@EditItem" />
+		  OnValidSubmit="@EditItem" />
+
 
 @code {
-    [Parameter] public string itemName { get; set; }
-    Item item = new Item();
-    protected async override Task OnParametersSetAsync()
-    {
-        item = await http.GetFromJsonAsync<Item>($"api/item/{itemName}");
-        StateHasChanged();
-    }
-    async Task EditItem()
-    {
-        await http.PutAsJsonAsync("api/item", item);
-        await js.InvokeVoidAsync("alert", $"Updated Successfully!");
-        uriHelper.NavigateTo("/store");
-    }
+	[Parameter] public string ItemName { get; set; }
+	Item item = new Item();
+	protected async override Task OnParametersSetAsync()
+	{
+		item = await http.GetFromJsonAsync<Item>($"api/item/{ItemName}");
+		StateHasChanged();
+	}
+	async Task EditItem()
+	{
+		await http.PutAsJsonAsync("api/item", item);
+		await js.InvokeVoidAsync("alert", $"Updated Successfully!");
+		uriHelper.NavigateTo("/store");
+	}
 }

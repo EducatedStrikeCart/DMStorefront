@@ -1,15 +1,7 @@
 ﻿using DMStorefront.Client.Services.Contracts;
 using DMStorefront.Shared;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.JSInterop;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace DMStorefront.Client.States
 {

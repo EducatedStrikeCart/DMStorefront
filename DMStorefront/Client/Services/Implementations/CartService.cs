@@ -2,11 +2,9 @@
 using DMStorefront.Client.Services.Contracts;
 using DMStorefront.Client.Services.ServiceModels;
 using DMStorefront.Shared.Models;
-using System.Net.Http.Json;
 
 namespace DMStorefront.Client.Services.Implementations
 {
-
     public class CartService : ICartService
     {
         public event Action? OnChange;

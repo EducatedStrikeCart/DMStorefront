@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-
 namespace DMStorefront.Shared
 {
     public class UpdateAccountParameters
