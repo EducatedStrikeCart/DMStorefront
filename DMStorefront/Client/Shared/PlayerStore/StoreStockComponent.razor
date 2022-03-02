@@ -1,13 +1,12 @@
 ﻿@using DMStorefront.Client.Services.Contracts
-
 @attribute [Authorize]
 @inject HttpClient Http
 @inject IJSRuntime js
 @inject AuthenticationStateProvider asp
 @inject CartService _cartApi
 
-<div class = "container-fluid">
-	<h3 class = "page-title">Store Inventory</h3>
+<div class="container-fluid">
+	<h3 class="page-title">Store Inventory</h3>
 	@if (StockItems == null)
 	{
 		<text>Loading...</text>
@@ -18,10 +17,9 @@
 	}
 	else
 	{
-		<table class="table table-dark">
+		<table class="table table-dark" style="margin-top:32px!important;">
 			<thead>
 				<tr>
-
 					<th>Name</th>
 					<th>Weight</th>
 					<th>Price</th>
