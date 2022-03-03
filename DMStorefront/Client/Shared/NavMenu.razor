@@ -25,7 +25,7 @@
 						</a>
 					</li>
 					<li class="ms-auto">
-						<AccountButtonComponent Class="btn btn-link" Username=@Username />
+						<AccountButtonComponent Class="btn btn-link" />
 					</li>
 					<li class="py-2 btn-link">|</li>
 
@@ -41,13 +41,6 @@
 
 @code {
 	bool collapseNavMenu = true;
-	string Username { get; set; } = "";
-
-	protected override async Task OnInitializedAsync()
-	{
-		AuthenticationState authState = await authStateProvider.GetAuthenticationStateAsync();
-		Username = authState.User.Identity.Name;
-	}
 
 	string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 

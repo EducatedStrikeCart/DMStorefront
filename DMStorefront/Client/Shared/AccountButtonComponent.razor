@@ -2,12 +2,11 @@
 
 
 <button class=@Class @onclick="NavigateToAccount">
-	 @Username
+	 Account Settings
 </button>
 
 
 @code {
-	[Parameter] public string Username { get; set; } = "";
 	[Parameter] public string Class { get; set; } = "";
 
 	public void NavigateToAccount()
