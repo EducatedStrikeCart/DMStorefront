@@ -14,16 +14,18 @@
 	<h2 class="page-title">Account Settings</h2>
 
 	<div class="align-self-center p-4">
-		<h4 class=" font-weight-normal text-center">Gold Setting</h4>
-		Your current gold is: @PlayerInventory.Wallet
-		<SetGoldButtonComponent Class="" Inventory=@PlayerInventory OnValidSubmit=SetPlayerGold />
+		<div class="text-center">
+			<h4 class="page-subtitle">Gold Setting</h4>
+			Your current gold is: @PlayerInventory.Wallet
+		</div>
+		<SetGoldButtonComponent Inventory=@PlayerInventory OnValidSubmit=SetPlayerGold />
 	</div>
 
 	<hr />
 
 	<EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="UpdateAccountParameters">
 		<DataAnnotationsValidator />
-		<h4 class=" font-weight-normal text-center">Change Password</h4>
+		<h4 class="page-subtitle font-weight-normal text-center">Change Password</h4>
 
 		<label for="inputPassword" class="sr-only">Password</label>
 		<InputText type="password" id="inputPassword" class="form-control" placeholder="Password" @bind-Value="@UpdateAccountParameters.Password" />
@@ -33,7 +35,7 @@
 		<InputText type="password" id="inputPasswordConfirm" class="form-control" placeholder="Password Confirmation" @bind-Value="@UpdateAccountParameters.PasswordConfirm" />
 		<ValidationMessage For="@(() => UpdateAccountParameters.PasswordConfirm)" />
 
-		<button class="btn btn-lg btn-primary btn-block" type="submit">Change Password</button>
+		<button class="dms-button-generic btn btn-lg btn-primary btn-block" type="submit">Change Password</button>
 
 		<label class="text-danger">@Error</label>
 	</EditForm>

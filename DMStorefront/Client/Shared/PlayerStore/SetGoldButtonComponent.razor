@@ -1,19 +1,17 @@
-﻿<div class=@Class>
+﻿<div class="form-signin">
 	<EditForm Model="@Inventory" OnValidSubmit="@OnValidSubmit">
 		<DataAnnotationsValidator />
 		<div style="font-family: 'Zen Loop', cursive padding: 50px">
-			<InputNumber @bind-Value="@Inventory.Wallet" />
+			<InputNumber class="form-control" @bind-Value="@Inventory.Wallet" />
 			<ValidationMessage For="@(() => Inventory.Wallet)" />
-			<button type="submit">
+			<button class="dms-button-generic btn btn-lg btn-primary btn-block" type="submit">
 				Set Gold
 			</button>
 		</div>
 	</EditForm>
 </div>
 
-
 @code {
-	[Parameter] public string Class { get; set; } = "";
 	[Parameter] public Inventory Inventory { get; set; } = new Inventory(0, "error");
 	[Parameter] public EventCallback OnValidSubmit { get; set; }
 }
